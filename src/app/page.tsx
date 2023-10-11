@@ -7,11 +7,19 @@ import { SideMenu } from '@/components/SideMenu'
 import { Header } from '@/components/Header'
 
 export default function Home() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
 
   useEffect(() => {
     themeChange(false)
   }, [session])
+
+  if (status === 'loading') {
+    return (
+      <div className='h-screen flex justify-center items-center'>
+        <span className='loading loading-bars loading-lg'></span>
+      </div>
+    )
+  }
 
   if (session) {
     return (
