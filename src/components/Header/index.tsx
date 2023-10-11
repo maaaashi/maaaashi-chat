@@ -45,38 +45,6 @@ export const Header = () => {
     'winter',
   ]
 
-  const viewThemeChanger = (
-    <div className=''>
-      <label tabIndex={0} className='btn btn-outline flex-col justify-around'>
-        <BsPalette2 size='15px' />
-        THEME
-      </label>
-      <ul
-        tabIndex={0}
-        className='dropdown-content menu rounded-box h-[70vh] max-h-96 w-fit flex-nowrap overflow-y-auto bg-base-300 p-2 shadow z-50'
-      >
-        {listTheme.map((theme, index) => (
-          <li key={index} data-theme={theme} className='my-1 bg-transparent'>
-            <button
-              className='flex justify-between rounded-lg bg-base-100'
-              data-set-theme={theme}
-              data-act-class='[&_svg]:visible'
-            >
-              <AiOutlineCheck className='check invisible' />
-              {theme.toUpperCase()}
-              <div className='flex gap-1'>
-                <span className='inline-block h-5 w-3 rounded-full bg-primary'></span>
-                <span className='inline-block h-5 w-3 rounded-full bg-secondary'></span>
-                <span className='inline-block h-5 w-3 rounded-full bg-success'></span>
-                <span className='inline-block h-5 w-3 rounded-full bg-neutral'></span>
-              </div>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-
   const navEnd = () => {
     if (!session) {
       return <></>
@@ -135,7 +103,44 @@ export const Header = () => {
       </div>
       <div className='flex-none gap-2'>
         <div className='dropdown dropdown-end flex'>{navEnd()}</div>
-        <div className='dropdown dropdown-end flex'>{viewThemeChanger}</div>
+        <div className='dropdown dropdown-end flex'>
+          <div>
+            <label
+              tabIndex={0}
+              className='btn btn-outline flex-col justify-around'
+            >
+              <BsPalette2 size='15px' />
+              THEME
+            </label>
+            <ul
+              tabIndex={0}
+              className='dropdown-content menu rounded-box h-[70vh] max-h-96 w-fit flex-nowrap overflow-y-auto bg-base-300 p-2 shadow z-50'
+            >
+              {listTheme.map((theme, index) => (
+                <li
+                  key={index}
+                  data-theme={theme}
+                  className='my-1 bg-transparent'
+                >
+                  <button
+                    className='flex justify-between rounded-lg bg-base-100'
+                    data-set-theme={theme}
+                    data-act-class='[&_svg]:visible'
+                  >
+                    <AiOutlineCheck className='check invisible' />
+                    {theme.toUpperCase()}
+                    <div className='flex gap-1'>
+                      <span className='inline-block h-5 w-3 rounded-full bg-primary'></span>
+                      <span className='inline-block h-5 w-3 rounded-full bg-secondary'></span>
+                      <span className='inline-block h-5 w-3 rounded-full bg-success'></span>
+                      <span className='inline-block h-5 w-3 rounded-full bg-neutral'></span>
+                    </div>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   )
