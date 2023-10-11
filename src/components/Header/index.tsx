@@ -113,13 +113,7 @@ export const Header = () => {
               {`${session.user?.name ?? session.user?.email ?? '名無し'}さん`}
             </li>
             <li>
-              <a className='justify-between'>
-                Profile
-                <span className='badge'>New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
+              <a className='justify-between'>Profile</a>
             </li>
             <li>
               <a onClick={() => signOut()}>Logout</a>
