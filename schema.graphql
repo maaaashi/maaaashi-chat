@@ -1,0 +1,17 @@
+type Channel {
+  id: String!
+  name: String!
+}
+
+type Chat {
+  id: String!
+  userName: String!
+  content: String!
+  channelId: String!
+  createdAt: String!
+}
+
+type Query {
+  listChannels: [Channel!]!
+  listChannelChats(channelId: String!): [Chat!]!
+}

@@ -1,16 +1,39 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { CfnOutput, Duration, Expiration, Stack, StackProps } from 'aws-cdk-lib'
+import {
+  AuthorizationType,
+  GraphqlApi,
+  SchemaFile,
+} from 'aws-cdk-lib/aws-appsync'
+import { Construct } from 'constructs'
+import path = require('path')
 
-export class AwsStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
+export class ChatAppStack extends Stack {
+  constructor(scope: Construct, id: string, props?: StackProps) {
+    super(scope, id, props)
 
-    // The code that defines your stack goes here
+    const api = new GraphqlApi(this, 'ChatAppApi', {
+      name: 'ChatApp-AppSync',
+      schema: SchemaFile.fromAsset(
+        path.join(__dirname, '../graphql/generate.graphqll')
+      ),
+      authorizationConfig: {
+        defaultAuthorization: {
+          authorizationType: AuthorizationType.API_KEY,
+          apiKeyConfig: {
+            name: 'appsync apikey',
+            description: 'appsync apikey with chat app',
+            expires: Expiration.after(Duration.days(7)),
+          },
+        },
+      },
+    })
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'AwsQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    new CfnOutput(this, 'GraphQL Endpoint', {
+      value: api.graphqlUrl,
+    })
+
+    new CfnOutput(this, 'GraphQL APIKEY', {
+      value: api.apiKey ?? '',
+    })
   }
 }

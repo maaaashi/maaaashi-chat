@@ -1,0 +1,6 @@
+query ListChannels {
+  listChannels {
+    id
+    name
+  }
+}
