@@ -54,7 +54,9 @@ export const SideMenu = () => {
           {/* <MenuItem icon={<BsFill4CircleFill />}> Menu 4 </MenuItem>
           <MenuItem icon={<BsFill5CircleFill />}> Menu 5 </MenuItem> */}
         </Menu>
-        <button className='btn btn-info'>{collapsed ? '+' : '部屋作成'}</button>
+        <button className='btn btn-info'>
+          {collapsed ? <AiOutlinePlusCircle /> : '部屋作成'}
+        </button>
       </div>
     </Sidebar>
   )
