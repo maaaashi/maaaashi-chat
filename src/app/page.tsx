@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { themeChange } from 'theme-change'
 import { SideMenu } from '@/components/SideMenu'
 import { Header } from '@/components/Header'
+import { Main } from '@/components/Main'
 
 export default function Home() {
   const { data: session, status } = useSession()
@@ -26,10 +27,7 @@ export default function Home() {
       <div className='flex h-screen overflow-y-hidden'>
         <SideMenu />
         <main className='flex-1 bg-base-100 flex flex-col'>
-          <Header />
-          <div className='flex-1 overflow-x-hidden overflow-y-auto w-full'>
-            メイン
-          </div>
+          <Main />
         </main>
       </div>
     )

@@ -7,12 +7,12 @@ import { MdInsertEmoticon } from 'react-icons/md'
 import { useRecoilState } from 'recoil'
 import { toggleAtom } from '@/atoms/toggle'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
-import { useListChannelsQuery } from '@/graphql/generate'
+import { channelsAtom } from '@/atoms/channels'
 
 export const SideMenu = () => {
   const [collapsed, setCollapsed] = useState(false)
   const [toggle, setToggle] = useRecoilState(toggleAtom)
-  const { data, loading, error } = useListChannelsQuery()
+  const [channels, setChannels] = useRecoilState(channelsAtom)
 
   const handleCollapsedChange = () => {
     setCollapsed(!collapsed)
@@ -53,11 +53,11 @@ export const SideMenu = () => {
               suffix={<FiChevronsLeft />}
             />
           )}
-          {data?.listChannels.map((channel, index) => (
+          {channels.map((channel, index) => (
             <MenuItem key={index} icon={<MdInsertEmoticon />}>
               {channel.name}
             </MenuItem>
-          )) ?? <div>まだ部屋が無いようです。作成してみよう！</div>}
+          ))}
         </Menu>
         <button className='btn btn-info'>
           {collapsed ? <AiOutlinePlusCircle /> : '部屋作成'}
