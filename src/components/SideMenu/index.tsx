@@ -23,35 +23,39 @@ export const SideMenu = () => {
       toggled={toggle}
       onBackdropClick={() => setToggle((c) => !c)}
     >
-      <Menu
-        menuItemStyles={{
-          button: ({ level, active, disabled }) => {
-            // only apply styles on first level elements of the tree
-            if (active)
-              return {
-                '--tw-border-opacity': '1',
-                '--tw-bg-opacity': '1',
-                borderColor: 'hsl(var(--b3) / var(--tw-border-opacity))',
-                backgroundColor: 'hsl(var(--b3) / var(--tw-bg-opacity))',
-              }
-          },
-        }}
-      >
-        {collapsed ? (
-          <MenuItem
-            onClick={handleCollapsedChange}
-            icon={<FiChevronsRight />}
-          />
-        ) : (
-          <MenuItem
-            onClick={handleCollapsedChange}
-            suffix={<FiChevronsLeft />}
-          />
-        )}
-        <MenuItem icon={<MdInsertEmoticon />}>Chat 1</MenuItem>
-        {/* <MenuItem icon={<BsFill4CircleFill />}> Menu 4 </MenuItem>
-        <MenuItem icon={<BsFill5CircleFill />}> Menu 5 </MenuItem> */}
-      </Menu>
+      <div className='flex flex-col h-full'>
+        <Menu
+          menuItemStyles={{
+            button: ({ level, active, disabled }) => {
+              // only apply styles on first level elements of the tree
+              if (active)
+                return {
+                  '--tw-border-opacity': '1',
+                  '--tw-bg-opacity': '1',
+                  borderColor: 'hsl(var(--b3) / var(--tw-border-opacity))',
+                  backgroundColor: 'hsl(var(--b3) / var(--tw-bg-opacity))',
+                }
+            },
+          }}
+          className='flex-1'
+        >
+          {collapsed ? (
+            <MenuItem
+              onClick={handleCollapsedChange}
+              icon={<FiChevronsRight />}
+            />
+          ) : (
+            <MenuItem
+              onClick={handleCollapsedChange}
+              suffix={<FiChevronsLeft />}
+            />
+          )}
+          <MenuItem icon={<MdInsertEmoticon />}>Chat 1</MenuItem>
+          {/* <MenuItem icon={<BsFill4CircleFill />}> Menu 4 </MenuItem>
+          <MenuItem icon={<BsFill5CircleFill />}> Menu 5 </MenuItem> */}
+        </Menu>
+        <button className='btn btn-info'>{collapsed ? '+' : '部屋作成'}</button>
+      </div>
     </Sidebar>
   )
 }
