@@ -2,8 +2,12 @@ import { CfnOutput, Duration, Expiration, Stack, StackProps } from 'aws-cdk-lib'
 import {
   AuthorizationType,
   GraphqlApi,
+  KeyCondition,
+  MappingTemplate,
+  Resolver,
   SchemaFile,
 } from 'aws-cdk-lib/aws-appsync'
+import { AttributeType, Table } from 'aws-cdk-lib/aws-dynamodb'
 import { Construct } from 'constructs'
 import path = require('path')
 
@@ -26,6 +30,31 @@ export class ChatAppStack extends Stack {
           },
         },
       },
+    })
+
+    const table = new Table(this, 'TodoTable', {
+      tableName: 'ChatAppTable',
+      partitionKey: {
+        name: 'pk',
+        type: AttributeType.STRING,
+      },
+      sortKey: {
+        name: 'sk',
+        type: AttributeType.STRING,
+      },
+    })
+
+    const dynamodbDatasource = api.addDynamoDbDataSource(
+      'DynamoDBDataSource',
+      table
+    )
+
+    dynamodbDatasource.createResolver('ListChannelsResolver', {
+      typeName: 'Query',
+      fieldName: 'listChannels',
+      requestMappingTemplate: MappingTemplate.dynamoDbQuery(
+        KeyCondition.eq('pk', 'pk')
+      ),
     })
 
     new CfnOutput(this, 'GraphQL Endpoint', {
