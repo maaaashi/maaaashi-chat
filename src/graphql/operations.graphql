@@ -1,5 +1,5 @@
-query ListChannels {
-  listChannels {
+query ListChannels($pk: String!) {
+  listChannels(pk: $pk) {
     id
     name
   }

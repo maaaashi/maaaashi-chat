@@ -55,6 +55,7 @@ export class ChatAppStack extends Stack {
       requestMappingTemplate: MappingTemplate.dynamoDbQuery(
         KeyCondition.eq('pk', 'pk')
       ),
+      responseMappingTemplate: MappingTemplate.dynamoDbResultList(),
     })
 
     new CfnOutput(this, 'GraphQL Endpoint', {

@@ -12,6 +12,6 @@ type Chat {
 }
 
 type Query {
-  listChannels: [Channel!]!
+  listChannels(pk: String!): [Channel!]!
   listChannelChats(channelId: String!): [Chat!]!
 }
