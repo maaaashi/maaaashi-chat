@@ -99,7 +99,7 @@ export const Header = () => {
       </button>
 
       <div className='flex-1'>
-        <a className='btn btn-ghost normal-case text-xl'>Management3.0</a>
+        <a className='btn btn-ghost normal-case text-xl'>ChatApp</a>
       </div>
       <div className='flex-none gap-2'>
         <div className='dropdown dropdown-end flex'>{navEnd()}</div>
