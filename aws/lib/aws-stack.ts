@@ -14,7 +14,7 @@ export class ChatAppStack extends Stack {
     const api = new GraphqlApi(this, 'ChatAppApi', {
       name: 'ChatApp-AppSync',
       schema: SchemaFile.fromAsset(
-        path.join(__dirname, '../graphql/generate.graphqll')
+        path.join(__dirname, '../graphql/generate.graphql')
       ),
       authorizationConfig: {
         defaultAuthorization: {
