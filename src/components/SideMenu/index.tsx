@@ -6,6 +6,7 @@ import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi'
 import { MdInsertEmoticon } from 'react-icons/md'
 import { useRecoilState } from 'recoil'
 import { toggleAtom } from '@/atoms/toggle'
+import { AiOutlinePlusCircle } from 'react-icons/ai'
 
 export const SideMenu = () => {
   const [collapsed, setCollapsed] = useState(false)
