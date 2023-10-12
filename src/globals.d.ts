@@ -10,5 +10,8 @@ declare namespace NodeJS {
     readonly GOOGLE_SECRET: string
     readonly COGNITO_CLIENT_ID: string
     readonly COGNITO_ISSUER: string
+    readonly NEXT_PUBLIC_GRAPHQL_ENDPOINT: string
+    readonly NEXT_PUBLIC_GRAPHQL_REGION: string
+    readonly NEXT_PUBLIC_GRAPHQL_APIKEY: string
   }
 }
