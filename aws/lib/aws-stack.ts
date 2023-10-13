@@ -44,13 +44,17 @@ export class ChatAppStack extends Stack {
       },
     })
 
-    // table.addLocalSecondaryIndex({
-    //   indexName: 'LSI1',
-    //   sortKey: {
-    //     name: 'type',
-    //     type: AttributeType.STRING,
-    //   },
-    // })
+    table.addGlobalSecondaryIndex({
+      indexName: 'GS1',
+      partitionKey: {
+        name: 'type',
+        type: AttributeType.STRING,
+      },
+      sortKey: {
+        name: 'createdAt',
+        type: AttributeType.STRING,
+      },
+    })
 
     const dynamodbDatasource = api.addDynamoDbDataSource(
       'DynamoDBDataSource',
@@ -61,7 +65,9 @@ export class ChatAppStack extends Stack {
       typeName: 'Query',
       fieldName: 'listChannels',
       requestMappingTemplate: MappingTemplate.dynamoDbQuery(
-        KeyCondition.beginsWith('sk', 'sk')
+        KeyCondition.eq('type', 'type').and(
+          KeyCondition.le('createdAt', 'createdAt')
+        )
       ),
       responseMappingTemplate: MappingTemplate.dynamoDbResultList(),
     })

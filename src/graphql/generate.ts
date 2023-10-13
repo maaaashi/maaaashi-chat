@@ -35,7 +35,7 @@ export type Chat = {
 export type Query = {
   __typename?: 'Query';
   listChannelChats: Array<Chat>;
-  listChannels: Array<Channel>;
+  listData: Array<Channel>;
 };
 
 
@@ -44,19 +44,22 @@ export type QueryListChannelChatsArgs = {
 };
 
 
-export type QueryListChannelsArgs = {
-  sk: Scalars['String']['input'];
+export type QueryListDataArgs = {
+  createdAt: Scalars['String']['input'];
+  type: Scalars['String']['input'];
 };
 
-export type ListChannelsQueryVariables = Exact<{ [key: string]: never; }>;
+export type ListChannelsQueryVariables = Exact<{
+  createdAt: Scalars['String']['input'];
+}>;
 
 
-export type ListChannelsQuery = { __typename?: 'Query', listChannels: Array<{ __typename?: 'Channel', id: string, name: string }> };
+export type ListChannelsQuery = { __typename?: 'Query', listData: Array<{ __typename?: 'Channel', id: string, name: string }> };
 
 
 export const ListChannelsDocument = gql`
-    query ListChannels {
-  listChannels(sk: "Channel") {
+    query ListChannels($createdAt: String!) {
+  listData(type: "channel", createdAt: $createdAt) {
     id
     name
   }
@@ -75,10 +78,11 @@ export const ListChannelsDocument = gql`
  * @example
  * const { data, loading, error } = useListChannelsQuery({
  *   variables: {
+ *      createdAt: // value for 'createdAt'
  *   },
  * });
  */
-export function useListChannelsQuery(baseOptions?: Apollo.QueryHookOptions<ListChannelsQuery, ListChannelsQueryVariables>) {
+export function useListChannelsQuery(baseOptions: Apollo.QueryHookOptions<ListChannelsQuery, ListChannelsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ListChannelsQuery, ListChannelsQueryVariables>(ListChannelsDocument, options);
       }

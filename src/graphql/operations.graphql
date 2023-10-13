@@ -1,5 +1,5 @@
-query ListChannels {
-  listChannels(sk: "Channel") {
+query ListChannels($createdAt: String!) {
+  listData(type: "channel", createdAt: $createdAt) {
     id
     name
   }
