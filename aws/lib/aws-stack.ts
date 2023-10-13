@@ -7,7 +7,7 @@ import {
   Resolver,
   SchemaFile,
 } from 'aws-cdk-lib/aws-appsync'
-import { AttributeType, Table } from 'aws-cdk-lib/aws-dynamodb'
+import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb'
 import { Construct } from 'constructs'
 import path = require('path')
 
@@ -34,6 +34,7 @@ export class ChatAppStack extends Stack {
 
     const table = new Table(this, 'TodoTable', {
       tableName: 'ChatAppTable',
+      billingMode: BillingMode.PAY_PER_REQUEST,
       partitionKey: {
         name: 'pk',
         type: AttributeType.STRING,
