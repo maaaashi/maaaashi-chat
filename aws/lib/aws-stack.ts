@@ -32,7 +32,7 @@ export class ChatAppStack extends Stack {
       },
     })
 
-    const table = new Table(this, 'TodoTable', {
+    const table = new Table(this, 'ChatAppTable', {
       tableName: 'ChatAppTable',
       billingMode: BillingMode.PAY_PER_REQUEST,
       partitionKey: {

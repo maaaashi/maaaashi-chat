@@ -6,7 +6,11 @@ import { channelsAtom } from '@/atoms/channels'
 import { Channel } from '@/domains/channel'
 
 export const Main = () => {
-  const listChannelsResult = useListChannelsQuery()
+  const listChannelsResult = useListChannelsQuery({
+    variables: {
+      pk: 'Channel',
+    },
+  })
   const setChannels = useSetRecoilState(channelsAtom)
 
   useEffect(() => {
