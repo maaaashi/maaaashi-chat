@@ -63,7 +63,7 @@ export class ChatAppStack extends Stack {
 
     dynamodbDatasource.createResolver('ListChannelsResolver', {
       typeName: 'Query',
-      fieldName: 'listChannels',
+      fieldName: 'listData',
       requestMappingTemplate: MappingTemplate.dynamoDbQuery(
         KeyCondition.eq('type', 'type').and(
           KeyCondition.le('createdAt', 'createdAt')

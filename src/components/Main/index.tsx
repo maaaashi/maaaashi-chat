@@ -6,17 +6,21 @@ import { channelsAtom } from '@/atoms/channels'
 import { Channel } from '@/domains/channel'
 
 export const Main = () => {
-  const listChannelsResult = useListChannelsQuery()
+  const { data, error, loading } = useListChannelsQuery({
+    variables: {
+      createdAt: new Date().toISOString(),
+    },
+  })
   const setChannels = useSetRecoilState(channelsAtom)
 
   useEffect(() => {
-    const { data, error, loading } = listChannelsResult
+    alert('hoge')
     if (error || loading || !data) return
 
-    const channels = data.listChannels.map((c) => new Channel(c.id, c.name))
+    const channels = data.listData.map((c) => new Channel(c.id, c.name))
 
     setChannels(channels)
-  }, [listChannelsResult, setChannels])
+  }, [data, error, loading, setChannels])
 
   return (
     <>
