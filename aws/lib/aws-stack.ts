@@ -45,7 +45,7 @@ export class ChatAppStack extends Stack {
     })
 
     table.addGlobalSecondaryIndex({
-      indexName: 'GS1',
+      indexName: 'GSI1',
       partitionKey: {
         name: 'type',
         type: AttributeType.STRING,
@@ -67,7 +67,8 @@ export class ChatAppStack extends Stack {
       requestMappingTemplate: MappingTemplate.dynamoDbQuery(
         KeyCondition.eq('type', 'type').and(
           KeyCondition.le('createdAt', 'createdAt')
-        )
+        ),
+        'GSI1'
       ),
       responseMappingTemplate: MappingTemplate.dynamoDbResultList(),
     })
