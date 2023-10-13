@@ -2,10 +2,10 @@
 
 ## メイン
 
-|         | pk             | sk             | type    | value        |
-| ------- | -------------- | -------------- | ------- | ------------ |
-| Channel | Channel-{uuid} | Channel-{uuid} | channel | ChannelValue |
-| Chat    | Channel-{uuid} | Chat-{uuid}    | chat    | ChatValue    |
+|         | pk             | sk             | value        |
+| ------- | -------------- | -------------- | ------------ |
+| Channel | Channel-{uuid} | Channel-{uuid} | ChannelValue |
+| Chat    | Channel-{uuid} | Chat-{uuid}    | ChatValue    |
 
 ## SI
 
