@@ -61,7 +61,7 @@ export class ChatAppStack extends Stack {
       typeName: 'Query',
       fieldName: 'listChannels',
       requestMappingTemplate: MappingTemplate.dynamoDbQuery(
-        KeyCondition.beginsWith('pk', 'pk')
+        KeyCondition.beginsWith('sk', 'sk')
       ),
       responseMappingTemplate: MappingTemplate.dynamoDbResultList(),
     })

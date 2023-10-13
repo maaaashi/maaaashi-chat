@@ -45,20 +45,18 @@ export type QueryListChannelChatsArgs = {
 
 
 export type QueryListChannelsArgs = {
-  pk: Scalars['String']['input'];
+  sk: Scalars['String']['input'];
 };
 
-export type ListChannelsQueryVariables = Exact<{
-  pk: Scalars['String']['input'];
-}>;
+export type ListChannelsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ListChannelsQuery = { __typename?: 'Query', listChannels: Array<{ __typename?: 'Channel', id: string, name: string }> };
 
 
 export const ListChannelsDocument = gql`
-    query ListChannels($pk: String!) {
-  listChannels(pk: $pk) {
+    query ListChannels {
+  listChannels(sk: "Channel") {
     id
     name
   }
@@ -77,11 +75,10 @@ export const ListChannelsDocument = gql`
  * @example
  * const { data, loading, error } = useListChannelsQuery({
  *   variables: {
- *      pk: // value for 'pk'
  *   },
  * });
  */
-export function useListChannelsQuery(baseOptions: Apollo.QueryHookOptions<ListChannelsQuery, ListChannelsQueryVariables>) {
+export function useListChannelsQuery(baseOptions?: Apollo.QueryHookOptions<ListChannelsQuery, ListChannelsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ListChannelsQuery, ListChannelsQueryVariables>(ListChannelsDocument, options);
       }
