@@ -45,6 +45,14 @@ export class ChatAppStack extends Stack {
       },
     })
 
+    table.addLocalSecondaryIndex({
+      indexName: 'LSI1',
+      sortKey: {
+        name: 'type',
+        type: AttributeType.STRING,
+      },
+    })
+
     const dynamodbDatasource = api.addDynamoDbDataSource(
       'DynamoDBDataSource',
       table
