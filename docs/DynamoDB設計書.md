@@ -9,6 +9,13 @@
 
 ## SI
 
-|      | pk   | sk        | usage |
-| ---- | ---- | --------- | ----- |
-| LSI1 | type | createdAt | 取得  |
+|     | pk   | sk        | usage |
+| --- | ---- | --------- | ----- |
+| GS1 | type | createdAt | 取得  |
+
+## Value
+
+| name         | value                                 |
+| ------------ | ------------------------------------- |
+| ChannelValue | { name: string }                      |
+| ChatValue    | { username: string, content: string } |

@@ -1,30 +1,37 @@
+'use client'
+
 import React, { useEffect } from 'react'
 import { Header } from '@/components/Header'
-import { useListChannelsQuery } from '@/graphql/generate'
+import {
+  useListChannelsLazyQuery,
+  useListChannelsQuery,
+} from '@/graphql/generate'
 import { useSetRecoilState } from 'recoil'
 import { channelsAtom } from '@/atoms/channels'
 import { Channel } from '@/domains/channel'
 
 export const Main = () => {
-  const { data, error, loading } = useListChannelsQuery({
-    variables: {
-      createdAt: new Date().toISOString(),
-    },
-  })
+  const [getChannels, { data, error, loading }] = useListChannelsLazyQuery()
   const setChannels = useSetRecoilState(channelsAtom)
 
   useEffect(() => {
-    alert('hoge')
+    getChannels({
+      variables: {
+        createdAt: new Date().toISOString(),
+      },
+    })
+  }, [getChannels])
+
+  useEffect(() => {
     if (error || loading || !data) return
+    const channels = data.listData.map(({ pk, value }) => {
+      const { name } = JSON.parse(value)
 
-    const channels = data.listData.map((c) => {
-      const { id, name } = JSON.parse(c.value)
-
-      return new Channel(id, name)
+      return new Channel(pk, name)
     })
 
     setChannels(channels)
-  }, [data, error, loading, setChannels])
+  }, [data, error, getChannels, loading, setChannels])
 
   return (
     <>

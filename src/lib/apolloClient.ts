@@ -1,5 +1,3 @@
-'use client'
-
 import { createAuthLink, AuthOptions } from 'aws-appsync-auth-link'
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link'
 import { ApolloClient, InMemoryCache, ApolloLink } from '@apollo/client/core'
