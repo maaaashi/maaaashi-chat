@@ -2,20 +2,14 @@ schema {
   query: Query
 }
 
-type Channel {
-  id: String!
-  name: String!
-}
-
-type Chat {
-  channelId: String!
-  content: String!
+type DynamoDBData {
   createdAt: String!
-  id: String!
-  userName: String!
+  pk: String!
+  sk: String!
+  value: String!
 }
 
 type Query {
-  listChannelChats(channelId: String!): [Chat!]!
-  listData(createdAt: String!, type: String!): [Channel!]!
+  listChannelChats(channelId: String!): [DynamoDBData!]!
+  listData(createdAt: String!, type: String!): [DynamoDBData!]!
 }

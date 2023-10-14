@@ -1,6 +1,12 @@
+fragment AllData on DynamoDBData {
+  pk
+  sk
+  value
+  createdAt
+}
+
 query ListChannels($createdAt: String!) {
   listData(type: "channel", createdAt: $createdAt) {
-    id
-    name
+    ...AllData
   }
 }

@@ -17,7 +17,11 @@ export const Main = () => {
     alert('hoge')
     if (error || loading || !data) return
 
-    const channels = data.listData.map((c) => new Channel(c.id, c.name))
+    const channels = data.listData.map((c) => {
+      const { id, name } = JSON.parse(c.value)
+
+      return new Channel(id, name)
+    })
 
     setChannels(channels)
   }, [data, error, loading, setChannels])

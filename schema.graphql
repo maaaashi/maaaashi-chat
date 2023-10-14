@@ -1,17 +1,11 @@
-type Channel {
-  id: String!
-  name: String!
-}
-
-type Chat {
-  id: String!
-  userName: String!
-  content: String!
-  channelId: String!
+type DynamoDBData {
+  pk: String!
+  sk: String!
+  value: String!
   createdAt: String!
 }
 
 type Query {
-  listData(type: String!, createdAt: String!): [Channel!]!
-  listChannelChats(channelId: String!): [Chat!]!
+  listData(type: String!, createdAt: String!): [DynamoDBData!]!
+  listChannelChats(channelId: String!): [DynamoDBData!]!
 }

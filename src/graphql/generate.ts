@@ -17,25 +17,18 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
-export type Channel = {
-  __typename?: 'Channel';
-  id: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-};
-
-export type Chat = {
-  __typename?: 'Chat';
-  channelId: Scalars['String']['output'];
-  content: Scalars['String']['output'];
+export type DynamoDbData = {
+  __typename?: 'DynamoDBData';
   createdAt: Scalars['String']['output'];
-  id: Scalars['String']['output'];
-  userName: Scalars['String']['output'];
+  pk: Scalars['String']['output'];
+  sk: Scalars['String']['output'];
+  value: Scalars['String']['output'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  listChannelChats: Array<Chat>;
-  listData: Array<Channel>;
+  listChannelChats: Array<DynamoDbData>;
+  listData: Array<DynamoDbData>;
 };
 
 
@@ -49,22 +42,30 @@ export type QueryListDataArgs = {
   type: Scalars['String']['input'];
 };
 
+export type AllDataFragment = { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string };
+
 export type ListChannelsQueryVariables = Exact<{
   createdAt: Scalars['String']['input'];
 }>;
 
 
-export type ListChannelsQuery = { __typename?: 'Query', listData: Array<{ __typename?: 'Channel', id: string, name: string }> };
+export type ListChannelsQuery = { __typename?: 'Query', listData: Array<{ __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string }> };
 
-
+export const AllDataFragmentDoc = gql`
+    fragment AllData on DynamoDBData {
+  pk
+  sk
+  value
+  createdAt
+}
+    `;
 export const ListChannelsDocument = gql`
     query ListChannels($createdAt: String!) {
   listData(type: "channel", createdAt: $createdAt) {
-    id
-    name
+    ...AllData
   }
 }
-    `;
+    ${AllDataFragmentDoc}`;
 
 /**
  * __useListChannelsQuery__
