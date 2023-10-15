@@ -1,5 +1,6 @@
 schema {
   query: Query
+  mutation: Mutation
 }
 
 type DynamoDBData {
@@ -8,6 +9,18 @@ type DynamoDBData {
   sk: String!
   type: String!
   value: String!
+}
+
+input DynamoDBInput {
+  createdAt: String!
+  pk: String!
+  sk: String!
+  type: String!
+  value: String!
+}
+
+type Mutation {
+  sendMessage(input: DynamoDBInput!): DynamoDBData
 }
 
 type Query {

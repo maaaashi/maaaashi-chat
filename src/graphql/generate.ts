@@ -26,6 +26,24 @@ export type DynamoDbData = {
   value: Scalars['String']['output'];
 };
 
+export type DynamoDbInput = {
+  createdAt: Scalars['String']['input'];
+  pk: Scalars['String']['input'];
+  sk: Scalars['String']['input'];
+  type: Scalars['String']['input'];
+  value: Scalars['String']['input'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  sendMessage?: Maybe<DynamoDbData>;
+};
+
+
+export type MutationSendMessageArgs = {
+  input: DynamoDbInput;
+};
+
 export type Query = {
   __typename?: 'Query';
   listData: Array<DynamoDbData>;
@@ -59,6 +77,13 @@ export type ListChannelChatsQueryVariables = Exact<{
 
 
 export type ListChannelChatsQuery = { __typename?: 'Query', listTypeData: Array<{ __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string }> };
+
+export type SendMessageMutationVariables = Exact<{
+  input: DynamoDbInput;
+}>;
+
+
+export type SendMessageMutation = { __typename?: 'Mutation', sendMessage?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
 
 export const AllDataFragmentDoc = gql`
     fragment AllData on DynamoDBData {
@@ -138,3 +163,36 @@ export function useListChannelChatsLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type ListChannelChatsQueryHookResult = ReturnType<typeof useListChannelChatsQuery>;
 export type ListChannelChatsLazyQueryHookResult = ReturnType<typeof useListChannelChatsLazyQuery>;
 export type ListChannelChatsQueryResult = Apollo.QueryResult<ListChannelChatsQuery, ListChannelChatsQueryVariables>;
+export const SendMessageDocument = gql`
+    mutation SendMessage($input: DynamoDBInput!) {
+  sendMessage(input: $input) {
+    ...AllData
+  }
+}
+    ${AllDataFragmentDoc}`;
+export type SendMessageMutationFn = Apollo.MutationFunction<SendMessageMutation, SendMessageMutationVariables>;
+
+/**
+ * __useSendMessageMutation__
+ *
+ * To run a mutation, you first call `useSendMessageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendMessageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendMessageMutation, { data, loading, error }] = useSendMessageMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSendMessageMutation(baseOptions?: Apollo.MutationHookOptions<SendMessageMutation, SendMessageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendMessageMutation, SendMessageMutationVariables>(SendMessageDocument, options);
+      }
+export type SendMessageMutationHookResult = ReturnType<typeof useSendMessageMutation>;
+export type SendMessageMutationResult = Apollo.MutationResult<SendMessageMutation>;
+export type SendMessageMutationOptions = Apollo.BaseMutationOptions<SendMessageMutation, SendMessageMutationVariables>;

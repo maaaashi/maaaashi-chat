@@ -6,6 +6,18 @@ type DynamoDBData {
   createdAt: String!
 }
 
+input DynamoDBInput {
+  pk: String!
+  sk: String!
+  type: String!
+  value: String!
+  createdAt: String!
+}
+
+type Mutation {
+  sendMessage(input: DynamoDBInput!): DynamoDBData
+}
+
 type Query {
   listData(type: String!, createdAt: String!): [DynamoDBData!]!
   listTypeData(pk: String!, type: String!): [DynamoDBData!]!

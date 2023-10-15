@@ -4,8 +4,10 @@ import {
   GraphqlApi,
   KeyCondition,
   MappingTemplate,
+  PrimaryKey,
   Resolver,
   SchemaFile,
+  Values,
 } from 'aws-cdk-lib/aws-appsync'
 import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb'
 import { Construct } from 'constructs'
@@ -89,6 +91,16 @@ export class ChatAppStack extends Stack {
         'LS1'
       ),
       responseMappingTemplate: MappingTemplate.dynamoDbResultList(),
+    })
+
+    dynamodbDatasource.createResolver('SendMessageResolver', {
+      typeName: 'Mutation',
+      fieldName: 'sendMessage',
+      requestMappingTemplate: MappingTemplate.dynamoDbPutItem(
+        PrimaryKey.partition('pk').is('pk'),
+        Values.projecting('input')
+      ),
+      responseMappingTemplate: MappingTemplate.dynamoDbResultItem(),
     })
 
     new CfnOutput(this, 'GraphQL Endpoint', {

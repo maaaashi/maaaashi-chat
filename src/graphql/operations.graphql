@@ -16,3 +16,9 @@ query ListChannelChats($channelId: String!) {
     ...AllData
   }
 }
+
+mutation SendMessage($input: DynamoDBInput!) {
+  sendMessage(input: $input) {
+    ...AllData
+  }
+}
