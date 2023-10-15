@@ -3,16 +3,18 @@
 import React, { useState } from 'react'
 import { Menu, MenuItem, Sidebar } from 'react-pro-sidebar'
 import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi'
-import { MdInsertEmoticon } from 'react-icons/md'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { toggleAtom } from '@/atoms/toggle'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { channelsAtom } from '@/atoms/channels'
+import { selectChannelAtom } from '@/atoms/selectChannel'
+import { BsChatLeft } from 'react-icons/bs'
 
 export const SideMenu = () => {
   const [collapsed, setCollapsed] = useState(false)
   const [toggle, setToggle] = useRecoilState(toggleAtom)
-  const [channels, setChannels] = useRecoilState(channelsAtom)
+  const channels = useRecoilValue(channelsAtom)
+  const [selectChannel, setSelectChannel] = useRecoilState(selectChannelAtom)
 
   const handleCollapsedChange = () => {
     setCollapsed(!collapsed)
@@ -40,7 +42,6 @@ export const SideMenu = () => {
                 }
             },
           }}
-          className='flex-1'
         >
           {collapsed ? (
             <MenuItem
@@ -53,15 +54,24 @@ export const SideMenu = () => {
               suffix={<FiChevronsLeft />}
             />
           )}
+          <div className='p-2'>
+            <button className='btn btn-info w-full'>
+              {collapsed ? <AiOutlinePlusCircle /> : '部屋作成'}
+            </button>
+          </div>
           {channels.map((channel, index) => (
-            <MenuItem key={index} icon={<MdInsertEmoticon />}>
+            <MenuItem
+              key={index}
+              icon={<BsChatLeft />}
+              onClick={() => {
+                setSelectChannel(channel)
+              }}
+              active={selectChannel === channel}
+            >
               {channel.name}
             </MenuItem>
           ))}
         </Menu>
-        <button className='btn btn-info'>
-          {collapsed ? <AiOutlinePlusCircle /> : '部屋作成'}
-        </button>
       </div>
     </Sidebar>
   )

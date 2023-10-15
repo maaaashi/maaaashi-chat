@@ -3,13 +3,15 @@
 import React, { useEffect } from 'react'
 import { Header } from '@/components/Header'
 import { useListChannelsLazyQuery } from '@/graphql/generate'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { channelsAtom } from '@/atoms/channels'
 import { Channel } from '@/domains/channel'
+import { selectChannelAtom } from '@/atoms/selectChannel'
 
 export const Main = () => {
   const [getChannels, { data, error, loading }] = useListChannelsLazyQuery()
   const setChannels = useSetRecoilState(channelsAtom)
+  const selectChannel = useRecoilValue(selectChannelAtom)
 
   useEffect(() => {
     getChannels({
@@ -35,7 +37,7 @@ export const Main = () => {
     <>
       <Header />
       <div className='flex-1 overflow-x-hidden overflow-y-auto w-full'>
-        メイン
+        {selectChannel ? '選択中' : '選択なし'}
       </div>
     </>
   )
