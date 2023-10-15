@@ -28,7 +28,8 @@ export const Main = () => {
     })
 
     setChannels(channels)
-  }, [data, error, getChannels, loading, setChannels])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, error, loading])
 
   return (
     <>

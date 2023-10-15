@@ -2,10 +2,10 @@
 
 ## メイン
 
-|         | pk             | sk             | value        | type    | createdAt        |
-| ------- | -------------- | -------------- | ------------ | ------- | ---------------- |
-| Channel | Channel-{uuid} | Channel-{uuid} | ChannelValue | channel | Date.toISOString |
-| Chat    | Channel-{uuid} | Chat-{uuid}    | ChatValue    | chat    | Date.toISOString |
+|         | pk             | sk             | type    | value        | createdAt        |
+| ------- | -------------- | -------------- | ------- | ------------ | ---------------- |
+| Channel | Channel-{uuid} | Channel-{uuid} | channel | ChannelValue | Date.toISOString |
+| Chat    | Channel-{uuid} | Chat-{uuid}    | chat    | ChatValue    | Date.toISOString |
 
 ## SI
 
