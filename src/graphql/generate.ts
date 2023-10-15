@@ -22,6 +22,7 @@ export type DynamoDbData = {
   createdAt: Scalars['String']['output'];
   pk: Scalars['String']['output'];
   sk: Scalars['String']['output'];
+  type: Scalars['String']['output'];
   value: Scalars['String']['output'];
 };
 

@@ -6,6 +6,7 @@ type DynamoDBData {
   createdAt: String!
   pk: String!
   sk: String!
+  type: String!
   value: String!
 }
 
