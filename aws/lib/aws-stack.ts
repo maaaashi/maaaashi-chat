@@ -85,7 +85,7 @@ export class ChatAppStack extends Stack {
       typeName: 'Query',
       fieldName: 'listTypeData',
       requestMappingTemplate: MappingTemplate.dynamoDbQuery(
-        KeyCondition.eq('pk', 'pk').and(KeyCondition.le('type', 'type')),
+        KeyCondition.eq('pk', 'pk').and(KeyCondition.eq('type', 'type')),
         'LS1'
       ),
       responseMappingTemplate: MappingTemplate.dynamoDbResultList(),
