@@ -7,14 +7,14 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import { AiOutlineCheck } from 'react-icons/ai'
 import { BsPalette2 } from 'react-icons/bs'
 import Avatar from 'boring-avatars'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { toggleAtom } from '@/atoms/toggle'
 import { selectChannelAtom } from '@/atoms/selectChannel'
 
 export const Header = () => {
   const { data: session } = useSession()
   const setToggle = useSetRecoilState(toggleAtom)
-  const setSelectChannel = useSetRecoilState(selectChannelAtom)
+  const selectChannel = useRecoilValue(selectChannelAtom)
   const listTheme = [
     'light',
     'dark',
@@ -103,6 +103,7 @@ export const Header = () => {
         >
           <GiHamburgerMenu />
         </button>
+        <h2>{selectChannel?.name}</h2>
       </div>
       <div className='self-end gap-2'>
         <div className='dropdown dropdown-end flex'>{profile()}</div>
