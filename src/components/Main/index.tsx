@@ -7,6 +7,8 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { channelsAtom } from '@/atoms/channels'
 import { Channel } from '@/domains/channel'
 import { selectChannelAtom } from '@/atoms/selectChannel'
+import { NoneChannel } from '../NoneChannel'
+import { ChatArea } from '../ChatArea'
 
 export const Main = () => {
   const [getChannels, { data, error, loading }] = useListChannelsLazyQuery()
@@ -37,7 +39,7 @@ export const Main = () => {
     <>
       <Header />
       <div className='flex-1 overflow-x-hidden overflow-y-auto w-full'>
-        {selectChannel ? '選択中' : '選択なし'}
+        {selectChannel ? <ChatArea /> : <NoneChannel />}
       </div>
     </>
   )

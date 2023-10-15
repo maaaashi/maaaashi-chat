@@ -9,10 +9,12 @@ import { BsPalette2 } from 'react-icons/bs'
 import Avatar from 'boring-avatars'
 import { useSetRecoilState } from 'recoil'
 import { toggleAtom } from '@/atoms/toggle'
+import { selectChannelAtom } from '@/atoms/selectChannel'
 
 export const Header = () => {
   const { data: session } = useSession()
   const setToggle = useSetRecoilState(toggleAtom)
+  const setSelectChannel = useSetRecoilState(selectChannelAtom)
   const listTheme = [
     'light',
     'dark',
@@ -92,6 +94,10 @@ export const Header = () => {
     )
   }
 
+  const initial = () => {
+    setSelectChannel(null)
+  }
+
   return (
     <div className='navbar bg-base-300'>
       <button
@@ -102,7 +108,9 @@ export const Header = () => {
       </button>
 
       <div className='flex-1'>
-        <a className='btn btn-ghost normal-case text-xl'>ChatApp</a>
+        <button className='btn btn-ghost normal-case text-xl' onClick={initial}>
+          ChatApp
+        </button>
       </div>
       <div className='flex-none gap-2'>
         <div className='dropdown dropdown-end flex'>{navEnd()}</div>
