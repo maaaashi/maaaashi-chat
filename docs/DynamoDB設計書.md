@@ -17,5 +17,5 @@
 
 | name         | value                                 |
 | ------------ | ------------------------------------- |
-| ChannelValue | { name: string }                      |
+| ChannelValue | { name: string, username: string }    |
 | ChatValue    | { username: string, content: string } |
