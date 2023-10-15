@@ -47,7 +47,7 @@ export const Header = () => {
     'winter',
   ]
 
-  const navEnd = () => {
+  const profile = () => {
     if (!session) {
       return <></>
     }
@@ -94,26 +94,18 @@ export const Header = () => {
     )
   }
 
-  const initial = () => {
-    setSelectChannel(null)
-  }
-
   return (
-    <div className='navbar bg-base-300'>
-      <button
-        onClick={() => setToggle((c) => !c)}
-        className='btn custom:hidden'
-      >
-        <GiHamburgerMenu />
-      </button>
-
-      <div className='flex-1'>
-        <button className='btn btn-ghost normal-case text-xl' onClick={initial}>
-          ChatApp
+    <div className='navbar bg-base-300 justify-between'>
+      <div>
+        <button
+          onClick={() => setToggle((c) => !c)}
+          className='btn custom:hidden'
+        >
+          <GiHamburgerMenu />
         </button>
       </div>
-      <div className='flex-none gap-2'>
-        <div className='dropdown dropdown-end flex'>{navEnd()}</div>
+      <div className='self-end gap-2'>
+        <div className='dropdown dropdown-end flex'>{profile()}</div>
         <div className='dropdown dropdown-end flex'>
           <div>
             <label

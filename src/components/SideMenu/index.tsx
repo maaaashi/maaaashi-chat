@@ -16,10 +16,6 @@ export const SideMenu = () => {
   const channels = useRecoilValue(channelsAtom)
   const [selectChannel, setSelectChannel] = useRecoilState(selectChannelAtom)
 
-  const handleCollapsedChange = () => {
-    setCollapsed(!collapsed)
-  }
-
   return (
     <Sidebar
       collapsed={collapsed}
@@ -32,7 +28,6 @@ export const SideMenu = () => {
         <Menu
           menuItemStyles={{
             button: ({ level, active, disabled }) => {
-              // only apply styles on first level elements of the tree
               if (active)
                 return {
                   '--tw-border-opacity': '1',
@@ -43,17 +38,9 @@ export const SideMenu = () => {
             },
           }}
         >
-          {collapsed ? (
-            <MenuItem
-              onClick={handleCollapsedChange}
-              icon={<FiChevronsRight />}
-            />
-          ) : (
-            <MenuItem
-              onClick={handleCollapsedChange}
-              suffix={<FiChevronsLeft />}
-            />
-          )}
+          <h1 className='p-3 text-center text-lg font-bold'>
+            {"Maaaashi's ChatApp"}
+          </h1>
           <div className='p-2'>
             <button className='btn btn-info w-full'>
               {collapsed ? <AiOutlinePlusCircle /> : '部屋作成'}
