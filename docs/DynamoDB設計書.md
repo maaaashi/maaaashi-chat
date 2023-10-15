@@ -16,7 +16,7 @@
 
 ## Value
 
-| name         | value                                 |
-| ------------ | ------------------------------------- |
-| ChannelValue | { name: string, username: string }    |
-| ChatValue    | { username: string, content: string } |
+| name         | value                                                   |
+| ------------ | ------------------------------------------------------- |
+| ChannelValue | { name: string, username: string }                      |
+| ChatValue    | { username: string, imageUrl: string, content: string } |

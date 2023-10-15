@@ -15,5 +15,6 @@ declare module 'DynamoDB-Module' {
   export type ChatValue = {
     content: string
     username: string
+    imageUrl: string
   }
 }

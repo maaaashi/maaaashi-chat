@@ -3,6 +3,7 @@ import { Chat } from '@/domains/chat'
 import { useListChannelChatsQuery } from '@/graphql/generate'
 import React, { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import { ChatBubble } from '../ChatBubble'
 
 export const ChatArea = () => {
   const selectChannel = useRecoilValue(selectChannelAtom)!
@@ -20,9 +21,15 @@ export const ChatArea = () => {
 
     const setChatData = data.listTypeData
       .map((d) => {
-        const { content, username } = JSON.parse(d.value)
+        const { content, username, imageUrl } = JSON.parse(d.value)
 
-        return new Chat(d.sk, content, username, new Date(d.createdAt))
+        return new Chat(
+          d.sk,
+          content,
+          username,
+          imageUrl,
+          new Date(d.createdAt)
+        )
       })
       .sort((a, b) => {
         if (a.createdAt < b.createdAt) return -1
@@ -39,9 +46,7 @@ export const ChatArea = () => {
   return (
     <div>
       {chats.map((c, index) => (
-        <div key={index}>
-          {c.id}: {c.createdAt.toISOString()}
-        </div>
+        <ChatBubble chat={c} key={index} />
       ))}
     </div>
   )
