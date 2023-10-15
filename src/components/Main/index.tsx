@@ -2,10 +2,7 @@
 
 import React, { useEffect } from 'react'
 import { Header } from '@/components/Header'
-import {
-  useListChannelsLazyQuery,
-  useListChannelsQuery,
-} from '@/graphql/generate'
+import { useListChannelsLazyQuery } from '@/graphql/generate'
 import { useSetRecoilState } from 'recoil'
 import { channelsAtom } from '@/atoms/channels'
 import { Channel } from '@/domains/channel'
