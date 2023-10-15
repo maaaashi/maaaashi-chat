@@ -7,5 +7,5 @@ type DynamoDBData {
 
 type Query {
   listData(type: String!, createdAt: String!): [DynamoDBData!]!
-  listChannelChats(channelId: String!): [DynamoDBData!]!
+  listTypeData(pk: String!, type: String!): [DynamoDBData!]!
 }

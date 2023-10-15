@@ -10,6 +10,6 @@ type DynamoDBData {
 }
 
 type Query {
-  listChannelChats(channelId: String!): [DynamoDBData!]!
   listData(createdAt: String!, type: String!): [DynamoDBData!]!
+  listTypeData(pk: String!, type: String!): [DynamoDBData!]!
 }

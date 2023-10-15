@@ -73,6 +73,16 @@ export class ChatAppStack extends Stack {
       responseMappingTemplate: MappingTemplate.dynamoDbResultList(),
     })
 
+    dynamodbDatasource.createResolver('ListChatResolver', {
+      typeName: 'Query',
+      fieldName: 'listTypeData',
+      requestMappingTemplate: MappingTemplate.dynamoDbQuery(
+        KeyCondition.eq('pk', 'pk').and(KeyCondition.le('type', 'type')),
+        'LS1'
+      ),
+      responseMappingTemplate: MappingTemplate.dynamoDbResultList(),
+    })
+
     new CfnOutput(this, 'GraphQL Endpoint', {
       value: api.graphqlUrl,
     })

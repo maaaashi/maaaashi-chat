@@ -12,6 +12,7 @@
 |     | pk   | sk        | usage |
 | --- | ---- | --------- | ----- |
 | GS1 | type | createdAt | 取得  |
+| LS1 | -    | type      | 取得  |
 
 ## Value
 

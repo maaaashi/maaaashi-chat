@@ -27,18 +27,19 @@ export type DynamoDbData = {
 
 export type Query = {
   __typename?: 'Query';
-  listChannelChats: Array<DynamoDbData>;
   listData: Array<DynamoDbData>;
-};
-
-
-export type QueryListChannelChatsArgs = {
-  channelId: Scalars['String']['input'];
+  listTypeData: Array<DynamoDbData>;
 };
 
 
 export type QueryListDataArgs = {
   createdAt: Scalars['String']['input'];
+  type: Scalars['String']['input'];
+};
+
+
+export type QueryListTypeDataArgs = {
+  pk: Scalars['String']['input'];
   type: Scalars['String']['input'];
 };
 
@@ -50,6 +51,13 @@ export type ListChannelsQueryVariables = Exact<{
 
 
 export type ListChannelsQuery = { __typename?: 'Query', listData: Array<{ __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string }> };
+
+export type ListChannelChatsQueryVariables = Exact<{
+  channelId: Scalars['String']['input'];
+}>;
+
+
+export type ListChannelChatsQuery = { __typename?: 'Query', listTypeData: Array<{ __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string }> };
 
 export const AllDataFragmentDoc = gql`
     fragment AllData on DynamoDBData {
@@ -94,3 +102,38 @@ export function useListChannelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type ListChannelsQueryHookResult = ReturnType<typeof useListChannelsQuery>;
 export type ListChannelsLazyQueryHookResult = ReturnType<typeof useListChannelsLazyQuery>;
 export type ListChannelsQueryResult = Apollo.QueryResult<ListChannelsQuery, ListChannelsQueryVariables>;
+export const ListChannelChatsDocument = gql`
+    query ListChannelChats($channelId: String!) {
+  listTypeData(pk: $channelId, type: "chat") {
+    ...AllData
+  }
+}
+    ${AllDataFragmentDoc}`;
+
+/**
+ * __useListChannelChatsQuery__
+ *
+ * To run a query within a React component, call `useListChannelChatsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListChannelChatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListChannelChatsQuery({
+ *   variables: {
+ *      channelId: // value for 'channelId'
+ *   },
+ * });
+ */
+export function useListChannelChatsQuery(baseOptions: Apollo.QueryHookOptions<ListChannelChatsQuery, ListChannelChatsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListChannelChatsQuery, ListChannelChatsQueryVariables>(ListChannelChatsDocument, options);
+      }
+export function useListChannelChatsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListChannelChatsQuery, ListChannelChatsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListChannelChatsQuery, ListChannelChatsQueryVariables>(ListChannelChatsDocument, options);
+        }
+export type ListChannelChatsQueryHookResult = ReturnType<typeof useListChannelChatsQuery>;
+export type ListChannelChatsLazyQueryHookResult = ReturnType<typeof useListChannelChatsLazyQuery>;
+export type ListChannelChatsQueryResult = Apollo.QueryResult<ListChannelChatsQuery, ListChannelChatsQueryVariables>;

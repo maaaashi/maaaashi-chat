@@ -10,3 +10,9 @@ query ListChannels($createdAt: String!) {
     ...AllData
   }
 }
+
+query ListChannelChats($channelId: String!) {
+  listTypeData(pk: $channelId, type: "chat") {
+    ...AllData
+  }
+}
