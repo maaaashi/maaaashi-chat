@@ -42,7 +42,7 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        custom: '577}_px',
+        custom: '577px',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
