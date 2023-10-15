@@ -21,7 +21,7 @@ export const ChatBubble: FC<Props> = ({ chat }) => {
           </div>
         </div>
         <div className='chat-header'>{chat.username}</div>
-        <div className='chat-bubble'>{chat.content}</div>
+        <div className='chat-bubble w-full max-w-full'>{chat.content}</div>
       </div>
       <time className='self-end text-xs opacity-50'>
         {chat.createdAt.toISOString()}
