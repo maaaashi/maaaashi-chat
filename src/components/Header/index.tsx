@@ -94,7 +94,10 @@ export const Header = () => {
 
   return (
     <div className='navbar bg-base-300'>
-      <button onClick={() => setToggle((c) => !c)} className='btn sm:hidden'>
+      <button
+        onClick={() => setToggle((c) => !c)}
+        className='btn custom:hidden'
+      >
         <GiHamburgerMenu />
       </button>
 
