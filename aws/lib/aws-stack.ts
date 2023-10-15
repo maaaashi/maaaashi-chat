@@ -97,8 +97,13 @@ export class ChatAppStack extends Stack {
       typeName: 'Mutation',
       fieldName: 'sendMessage',
       requestMappingTemplate: MappingTemplate.dynamoDbPutItem(
-        PrimaryKey.partition('pk').is('pk'),
-        Values.projecting('input')
+        PrimaryKey.partition('pk').is('input.pk').sort('sk').is('input.sk'),
+        Values.attribute('type')
+          .is('input.type')
+          .attribute('value')
+          .is('input.value')
+          .attribute('createdAt')
+          .is('input.createdAt')
       ),
       responseMappingTemplate: MappingTemplate.dynamoDbResultItem(),
     })
