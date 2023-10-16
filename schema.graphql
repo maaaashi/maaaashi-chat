@@ -26,4 +26,5 @@ type Query {
 
 type Subscription {
   onChat(pk: String!): DynamoDBData @aws_subscribe(mutations: ["sendMessage"])
+  onChannel: DynamoDBData @aws_subscribe(mutations: ["createChannel"])
 }

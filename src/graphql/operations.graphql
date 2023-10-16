@@ -34,3 +34,9 @@ mutation CreateChannel($input: DynamoDBInput!) {
     ...AllData
   }
 }
+
+subscription OnChannel($pk: String!) {
+  onChannel {
+    ...AllData
+  }
+}

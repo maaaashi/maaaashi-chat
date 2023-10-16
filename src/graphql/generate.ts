@@ -70,6 +70,7 @@ export type QueryListTypeDataArgs = {
 
 export type Subscription = {
   __typename?: 'Subscription';
+  onChannel?: Maybe<DynamoDbData>;
   onChat?: Maybe<DynamoDbData>;
 };
 
@@ -114,6 +115,13 @@ export type CreateChannelMutationVariables = Exact<{
 
 
 export type CreateChannelMutation = { __typename?: 'Mutation', createChannel?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
+
+export type OnChannelSubscriptionVariables = Exact<{
+  pk: Scalars['String']['input'];
+}>;
+
+
+export type OnChannelSubscription = { __typename?: 'Subscription', onChannel?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
 
 export const AllDataFragmentDoc = gql`
     fragment AllData on DynamoDBData {
@@ -289,3 +297,33 @@ export function useCreateChannelMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateChannelMutationHookResult = ReturnType<typeof useCreateChannelMutation>;
 export type CreateChannelMutationResult = Apollo.MutationResult<CreateChannelMutation>;
 export type CreateChannelMutationOptions = Apollo.BaseMutationOptions<CreateChannelMutation, CreateChannelMutationVariables>;
+export const OnChannelDocument = gql`
+    subscription OnChannel($pk: String!) {
+  onChannel {
+    ...AllData
+  }
+}
+    ${AllDataFragmentDoc}`;
+
+/**
+ * __useOnChannelSubscription__
+ *
+ * To run a query within a React component, call `useOnChannelSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useOnChannelSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOnChannelSubscription({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useOnChannelSubscription(baseOptions: Apollo.SubscriptionHookOptions<OnChannelSubscription, OnChannelSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<OnChannelSubscription, OnChannelSubscriptionVariables>(OnChannelDocument, options);
+      }
+export type OnChannelSubscriptionHookResult = ReturnType<typeof useOnChannelSubscription>;
+export type OnChannelSubscriptionResult = Apollo.SubscriptionResult<OnChannelSubscription>;
