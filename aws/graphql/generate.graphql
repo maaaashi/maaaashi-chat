@@ -22,10 +22,12 @@ input DynamoDBInput {
 
 type Mutation {
   createChannel(input: DynamoDBInput!): DynamoDBData
+  putProfile(input: DynamoDBInput!): DynamoDBData
   sendMessage(input: DynamoDBInput!): DynamoDBData
 }
 
 type Query {
+  getProfile(pk: String!, type: String!): DynamoDBData
   listData(createdAt: String!, type: String!): [DynamoDBData!]!
   listTypeData(pk: String!, type: String!): [DynamoDBData!]!
 }

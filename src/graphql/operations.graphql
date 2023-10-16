@@ -40,3 +40,15 @@ subscription OnChannel {
     ...AllData
   }
 }
+
+mutation PutProfile($input: DynamoDBInput!) {
+  putProfile(input: $input) {
+    ...AllData
+  }
+}
+
+query GetProfile($pk: String!) {
+  getProfile(pk: $pk, type: "profile") {
+    ...AllData
+  }
+}

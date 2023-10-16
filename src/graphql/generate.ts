@@ -37,11 +37,17 @@ export type DynamoDbInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createChannel?: Maybe<DynamoDbData>;
+  putProfile?: Maybe<DynamoDbData>;
   sendMessage?: Maybe<DynamoDbData>;
 };
 
 
 export type MutationCreateChannelArgs = {
+  input: DynamoDbInput;
+};
+
+
+export type MutationPutProfileArgs = {
   input: DynamoDbInput;
 };
 
@@ -52,8 +58,15 @@ export type MutationSendMessageArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  getProfile?: Maybe<DynamoDbData>;
   listData: Array<DynamoDbData>;
   listTypeData: Array<DynamoDbData>;
+};
+
+
+export type QueryGetProfileArgs = {
+  pk: Scalars['String']['input'];
+  type: Scalars['String']['input'];
 };
 
 
@@ -120,6 +133,20 @@ export type OnChannelSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
 export type OnChannelSubscription = { __typename?: 'Subscription', onChannel?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
+
+export type PutProfileMutationVariables = Exact<{
+  input: DynamoDbInput;
+}>;
+
+
+export type PutProfileMutation = { __typename?: 'Mutation', putProfile?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
+
+export type GetProfileQueryVariables = Exact<{
+  pk: Scalars['String']['input'];
+}>;
+
+
+export type GetProfileQuery = { __typename?: 'Query', getProfile?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
 
 export const AllDataFragmentDoc = gql`
     fragment AllData on DynamoDBData {
@@ -324,3 +351,71 @@ export function useOnChannelSubscription(baseOptions?: Apollo.SubscriptionHookOp
       }
 export type OnChannelSubscriptionHookResult = ReturnType<typeof useOnChannelSubscription>;
 export type OnChannelSubscriptionResult = Apollo.SubscriptionResult<OnChannelSubscription>;
+export const PutProfileDocument = gql`
+    mutation PutProfile($input: DynamoDBInput!) {
+  putProfile(input: $input) {
+    ...AllData
+  }
+}
+    ${AllDataFragmentDoc}`;
+export type PutProfileMutationFn = Apollo.MutationFunction<PutProfileMutation, PutProfileMutationVariables>;
+
+/**
+ * __usePutProfileMutation__
+ *
+ * To run a mutation, you first call `usePutProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePutProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [putProfileMutation, { data, loading, error }] = usePutProfileMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePutProfileMutation(baseOptions?: Apollo.MutationHookOptions<PutProfileMutation, PutProfileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PutProfileMutation, PutProfileMutationVariables>(PutProfileDocument, options);
+      }
+export type PutProfileMutationHookResult = ReturnType<typeof usePutProfileMutation>;
+export type PutProfileMutationResult = Apollo.MutationResult<PutProfileMutation>;
+export type PutProfileMutationOptions = Apollo.BaseMutationOptions<PutProfileMutation, PutProfileMutationVariables>;
+export const GetProfileDocument = gql`
+    query GetProfile($pk: String!) {
+  getProfile(pk: $pk, type: "profile") {
+    ...AllData
+  }
+}
+    ${AllDataFragmentDoc}`;
+
+/**
+ * __useGetProfileQuery__
+ *
+ * To run a query within a React component, call `useGetProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProfileQuery({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useGetProfileQuery(baseOptions: Apollo.QueryHookOptions<GetProfileQuery, GetProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProfileQuery, GetProfileQueryVariables>(GetProfileDocument, options);
+      }
+export function useGetProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProfileQuery, GetProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProfileQuery, GetProfileQueryVariables>(GetProfileDocument, options);
+        }
+export type GetProfileQueryHookResult = ReturnType<typeof useGetProfileQuery>;
+export type GetProfileLazyQueryHookResult = ReturnType<typeof useGetProfileLazyQuery>;
+export type GetProfileQueryResult = Apollo.QueryResult<GetProfileQuery, GetProfileQueryVariables>;
