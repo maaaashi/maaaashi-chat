@@ -99,11 +99,11 @@ export class ChatAppStack extends Stack {
       requestMappingTemplate: MappingTemplate.dynamoDbPutItem(
         PrimaryKey.partition('pk').is('input.pk').sort('sk').is('input.sk'),
         Values.attribute('type')
-          .is('input.type')
+          .is('$ctx.args.input.type')
           .attribute('value')
-          .is('input.value')
+          .is('$ctx.args.input.value')
           .attribute('createdAt')
-          .is('input.createdAt')
+          .is('$ctx.args.input.createdAt')
       ),
       responseMappingTemplate: MappingTemplate.dynamoDbResultItem(),
     })
