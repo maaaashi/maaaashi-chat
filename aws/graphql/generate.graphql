@@ -21,6 +21,7 @@ input DynamoDBInput {
 }
 
 type Mutation {
+  createChannel(input: DynamoDBInput!): DynamoDBData
   sendMessage(input: DynamoDBInput!): DynamoDBData
 }
 

@@ -108,6 +108,21 @@ export class ChatAppStack extends Stack {
       responseMappingTemplate: MappingTemplate.dynamoDbResultItem(),
     })
 
+    dynamodbDatasource.createResolver('createChannelResolver', {
+      typeName: 'Mutation',
+      fieldName: 'createChannel',
+      requestMappingTemplate: MappingTemplate.dynamoDbPutItem(
+        PrimaryKey.partition('pk').is('input.pk').sort('sk').is('input.sk'),
+        Values.attribute('type')
+          .is('$ctx.args.input.type')
+          .attribute('value')
+          .is('$ctx.args.input.value')
+          .attribute('createdAt')
+          .is('$ctx.args.input.createdAt')
+      ),
+      responseMappingTemplate: MappingTemplate.dynamoDbResultItem(),
+    })
+
     new CfnOutput(this, 'GraphQL Endpoint', {
       value: api.graphqlUrl,
     })

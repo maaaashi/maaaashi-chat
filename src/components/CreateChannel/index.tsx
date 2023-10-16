@@ -14,25 +14,31 @@ export const CreateChannel = () => {
       style={{ backgroundColor: 'rgba(1,1,1,0.6' }}
     >
       <div className='bg-base-100 p-5 rounded-lg'>
-        <h3>チャンネル作成</h3>
+        <h3 className='font-bold text-lg'>チャンネル作成</h3>
 
-        <form>
-          <input
-            type='text'
-            placeholder='Type here'
-            className='input input-bordered w-full max-w-xs'
-          />
+        <form className='flex flex-col gap-3'>
+          <div className='form-control w-full max-w-xs'>
+            <label className='label' htmlFor='channelName'>
+              <span className='label-text'>チャンネル名</span>
+            </label>
+            <input
+              type='text'
+              id='channelName'
+              placeholder='○○について'
+              className='input input-bordered w-full max-w-xs'
+            />
+          </div>
 
-          <div>
+          <div className='self-end'>
             <button
-              className='btn btn-outline'
+              className='btn btn-outline text-[12px]'
               onClick={() => {
                 setOpenModal(false)
               }}
             >
               キャンセル
             </button>
-            <button className='btn btn-primary'>作成</button>
+            <button className='btn btn-primary text-[12px]'>作成</button>
           </div>
         </form>
       </div>

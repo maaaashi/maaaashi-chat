@@ -36,7 +36,13 @@ export type DynamoDbInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createChannel?: Maybe<DynamoDbData>;
   sendMessage?: Maybe<DynamoDbData>;
+};
+
+
+export type MutationCreateChannelArgs = {
+  input: DynamoDbInput;
 };
 
 
@@ -101,6 +107,13 @@ export type OnChatSubscriptionVariables = Exact<{
 
 
 export type OnChatSubscription = { __typename?: 'Subscription', onChat?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
+
+export type CreateChannelMutationVariables = Exact<{
+  input: DynamoDbInput;
+}>;
+
+
+export type CreateChannelMutation = { __typename?: 'Mutation', createChannel?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
 
 export const AllDataFragmentDoc = gql`
     fragment AllData on DynamoDBData {
@@ -243,3 +256,36 @@ export function useOnChatSubscription(baseOptions: Apollo.SubscriptionHookOption
       }
 export type OnChatSubscriptionHookResult = ReturnType<typeof useOnChatSubscription>;
 export type OnChatSubscriptionResult = Apollo.SubscriptionResult<OnChatSubscription>;
+export const CreateChannelDocument = gql`
+    mutation CreateChannel($input: DynamoDBInput!) {
+  createChannel(input: $input) {
+    ...AllData
+  }
+}
+    ${AllDataFragmentDoc}`;
+export type CreateChannelMutationFn = Apollo.MutationFunction<CreateChannelMutation, CreateChannelMutationVariables>;
+
+/**
+ * __useCreateChannelMutation__
+ *
+ * To run a mutation, you first call `useCreateChannelMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateChannelMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createChannelMutation, { data, loading, error }] = useCreateChannelMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateChannelMutation(baseOptions?: Apollo.MutationHookOptions<CreateChannelMutation, CreateChannelMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateChannelMutation, CreateChannelMutationVariables>(CreateChannelDocument, options);
+      }
+export type CreateChannelMutationHookResult = ReturnType<typeof useCreateChannelMutation>;
+export type CreateChannelMutationResult = Apollo.MutationResult<CreateChannelMutation>;
+export type CreateChannelMutationOptions = Apollo.BaseMutationOptions<CreateChannelMutation, CreateChannelMutationVariables>;
