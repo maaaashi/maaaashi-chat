@@ -1,8 +1,10 @@
 import { openModalAtom } from '@/atoms/openModal'
+import { selectChannelAtom } from '@/atoms/selectChannel'
+import { Channel } from '@/domains/channel'
 import { useCreateChannelMutation } from '@/graphql/generate'
 import { useSession } from 'next-auth/react'
 import React, { FormEvent, useState } from 'react'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { v4 as uuidv4 } from 'uuid'
 
 export const CreateChannel = () => {
@@ -10,13 +12,14 @@ export const CreateChannel = () => {
   const [text, setText] = useState('')
   const [openModal, setOpenModal] = useRecoilState(openModalAtom)
   const [createChannel] = useCreateChannelMutation()
+  const setSelectChannel = useSetRecoilState(selectChannelAtom)
 
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
 
     const uuid = uuidv4()
 
-    await createChannel({
+    const response = await createChannel({
       variables: {
         input: {
           pk: 'Channel-' + uuid,
@@ -31,6 +34,13 @@ export const CreateChannel = () => {
       },
     })
 
+    if (!response.data || !response.data.createChannel) return
+
+    const { name } = JSON.parse(response.data?.createChannel?.value)
+
+    const newChannel = new Channel(response.data?.createChannel?.pk, name)
+
+    setSelectChannel(newChannel)
     setOpenModal(false)
   }
 

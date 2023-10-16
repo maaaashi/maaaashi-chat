@@ -12,6 +12,7 @@ import { BsChatLeft } from 'react-icons/bs'
 import { openModalAtom } from '@/atoms/openModal'
 import { useOnChannelSubscription } from '@/graphql/generate'
 import { Channel } from '@/domains/channel'
+import { modeAtom } from '@/atoms/mode'
 
 export const SideMenu = () => {
   const [collapsed, setCollapsed] = useState(false)
@@ -19,6 +20,7 @@ export const SideMenu = () => {
   const [channels, setChannels] = useRecoilState(channelsAtom)
   const [selectChannel, setSelectChannel] = useRecoilState(selectChannelAtom)
   const setOpenModal = useSetRecoilState(openModalAtom)
+  const setMode = useSetRecoilState(modeAtom)
   const { data } = useOnChannelSubscription()
 
   useEffect(() => {
@@ -58,7 +60,10 @@ export const SideMenu = () => {
           <div className='p-2'>
             <button
               className='btn btn-info w-full'
-              onClick={() => setOpenModal(true)}
+              onClick={() => {
+                setOpenModal(true)
+                setMode('chat')
+              }}
             >
               {collapsed ? <AiOutlinePlusCircle /> : '部屋作成'}
             </button>
@@ -69,6 +74,7 @@ export const SideMenu = () => {
               icon={<BsChatLeft />}
               onClick={() => {
                 setSelectChannel(channel)
+                setMode('chat')
               }}
               active={selectChannel === channel}
             >

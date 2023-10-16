@@ -10,10 +10,12 @@ import Avatar from 'boring-avatars'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { toggleAtom } from '@/atoms/toggle'
 import { selectChannelAtom } from '@/atoms/selectChannel'
+import { modeAtom } from '@/atoms/mode'
 
 export const Header = () => {
   const { data: session } = useSession()
   const setToggle = useSetRecoilState(toggleAtom)
+  const setMode = useSetRecoilState(modeAtom)
   const selectChannel = useRecoilValue(selectChannelAtom)
   const listTheme = [
     'light',
@@ -83,7 +85,14 @@ export const Header = () => {
               {`${session.user?.name ?? session.user?.email ?? '名無し'}さん`}
             </li>
             <li>
-              <a className='justify-between'>Profile</a>
+              <a
+                className='justify-between'
+                onClick={() => {
+                  setMode('profile')
+                }}
+              >
+                Profile
+              </a>
             </li>
             <li>
               <a onClick={() => signOut()}>Logout</a>

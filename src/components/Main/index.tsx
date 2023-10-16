@@ -9,11 +9,22 @@ import { Channel } from '@/domains/channel'
 import { selectChannelAtom } from '@/atoms/selectChannel'
 import { NoneChannel } from '../NoneChannel'
 import { ChatArea } from '../ChatArea'
+import { modeAtom } from '@/atoms/mode'
+import { Profile } from '../Profile'
 
 export const Main = () => {
   const [getChannels, { data, error, loading }] = useListChannelsLazyQuery()
+  const mode = useRecoilValue(modeAtom)
   const setChannels = useSetRecoilState(channelsAtom)
   const selectChannel = useRecoilValue(selectChannelAtom)
+  const mainView = () => {
+    switch (mode) {
+      case 'chat':
+        return selectChannel ? <ChatArea /> : <NoneChannel />
+      case 'profile':
+        return <Profile />
+    }
+  }
 
   useEffect(() => {
     getChannels({
@@ -39,7 +50,7 @@ export const Main = () => {
     <>
       <Header />
       <div className='flex-1 overflow-x-hidden overflow-y-auto w-full'>
-        {selectChannel ? <ChatArea /> : <NoneChannel />}
+        {mainView()}
       </div>
     </>
   )
