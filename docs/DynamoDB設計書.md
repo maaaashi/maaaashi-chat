@@ -6,6 +6,7 @@
 | ------- | -------------- | -------------- | ------- | ------------ | ---------------- |
 | Channel | Channel-{uuid} | Channel-{uuid} | channel | ChannelValue | Date.toISOString |
 | Chat    | Channel-{uuid} | Chat-{uuid}    | chat    | ChatValue    | Date.toISOString |
+| Profile | {email}        | {email}        | profile | ProfileValue | Date.toISOString |
 
 ## SI
 
@@ -20,3 +21,4 @@
 | ------------ | ------------------------------------------------------- |
 | ChannelValue | { name: string, username: string }                      |
 | ChatValue    | { username: string, imageUrl: string, content: string } |
+| ProfileValue | { username: string }                                    |

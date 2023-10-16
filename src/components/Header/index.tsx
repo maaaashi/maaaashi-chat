@@ -91,7 +91,7 @@ export const Header = () => {
                   setMode('profile')
                 }}
               >
-                Profile
+                Edit Profile
               </a>
             </li>
             <li>
