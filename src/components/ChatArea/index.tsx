@@ -67,7 +67,12 @@ export const ChatArea = () => {
     setChats((c) => [...c, addChat])
   }, [onChatData])
 
-  if (loading || error) return <>loading...</>
+  if (loading || error)
+    return (
+      <div className='h-full flex items-center justify-center'>
+        <span className='loading loading-ring loading-lg'></span>
+      </div>
+    )
 
   return (
     <div className='h-full flex flex-col'>
