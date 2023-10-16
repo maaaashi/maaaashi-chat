@@ -116,9 +116,7 @@ export type CreateChannelMutationVariables = Exact<{
 
 export type CreateChannelMutation = { __typename?: 'Mutation', createChannel?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
 
-export type OnChannelSubscriptionVariables = Exact<{
-  pk: Scalars['String']['input'];
-}>;
+export type OnChannelSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
 export type OnChannelSubscription = { __typename?: 'Subscription', onChannel?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
@@ -298,7 +296,7 @@ export type CreateChannelMutationHookResult = ReturnType<typeof useCreateChannel
 export type CreateChannelMutationResult = Apollo.MutationResult<CreateChannelMutation>;
 export type CreateChannelMutationOptions = Apollo.BaseMutationOptions<CreateChannelMutation, CreateChannelMutationVariables>;
 export const OnChannelDocument = gql`
-    subscription OnChannel($pk: String!) {
+    subscription OnChannel {
   onChannel {
     ...AllData
   }
@@ -317,11 +315,10 @@ export const OnChannelDocument = gql`
  * @example
  * const { data, loading, error } = useOnChannelSubscription({
  *   variables: {
- *      pk: // value for 'pk'
  *   },
  * });
  */
-export function useOnChannelSubscription(baseOptions: Apollo.SubscriptionHookOptions<OnChannelSubscription, OnChannelSubscriptionVariables>) {
+export function useOnChannelSubscription(baseOptions?: Apollo.SubscriptionHookOptions<OnChannelSubscription, OnChannelSubscriptionVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useSubscription<OnChannelSubscription, OnChannelSubscriptionVariables>(OnChannelDocument, options);
       }

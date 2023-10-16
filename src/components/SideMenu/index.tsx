@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Menu, MenuItem, Sidebar } from 'react-pro-sidebar'
 import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -10,13 +10,25 @@ import { channelsAtom } from '@/atoms/channels'
 import { selectChannelAtom } from '@/atoms/selectChannel'
 import { BsChatLeft } from 'react-icons/bs'
 import { openModalAtom } from '@/atoms/openModal'
+import { useOnChannelSubscription } from '@/graphql/generate'
+import { Channel } from '@/domains/channel'
 
 export const SideMenu = () => {
   const [collapsed, setCollapsed] = useState(false)
   const [toggle, setToggle] = useRecoilState(toggleAtom)
-  const channels = useRecoilValue(channelsAtom)
+  const [channels, setChannels] = useRecoilState(channelsAtom)
   const [selectChannel, setSelectChannel] = useRecoilState(selectChannelAtom)
   const setOpenModal = useSetRecoilState(openModalAtom)
+  const { data } = useOnChannelSubscription()
+
+  useEffect(() => {
+    if (!data || !data.onChannel) return
+
+    const newChannel = data.onChannel
+    const { name } = JSON.parse(data.onChannel.value)
+
+    setChannels((c) => [...c, new Channel(newChannel.pk, name)])
+  }, [data, setChannels])
 
   return (
     <Sidebar
