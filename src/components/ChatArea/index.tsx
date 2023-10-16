@@ -1,6 +1,9 @@
 import { selectChannelAtom } from '@/atoms/selectChannel'
 import { Chat } from '@/domains/chat'
-import { useListChannelChatsQuery } from '@/graphql/generate'
+import {
+  useListChannelChatsQuery,
+  useOnChatSubscription,
+} from '@/graphql/generate'
 import React, { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { ChatBubble } from '../ChatBubble'
@@ -14,11 +17,14 @@ export const ChatArea = () => {
       channelId: selectChannel.id,
     },
   })
+  const { data: onChatData } = useOnChatSubscription({
+    variables: {
+      pk: selectChannel.id,
+    },
+  })
 
   useEffect(() => {
     if (error || loading || !data) return
-
-    console.log(data.listTypeData)
 
     const setChatData = data.listTypeData
       .map((d) => {
@@ -41,6 +47,25 @@ export const ChatArea = () => {
     setChats(setChatData)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error, loading])
+
+  useEffect(() => {
+    const data = onChatData?.onChat
+
+    if (!data) {
+      return
+    }
+    const { content, username, imageUrl } = JSON.parse(data.value)
+
+    const addChat = new Chat(
+      data.sk,
+      content,
+      username,
+      imageUrl,
+      new Date(data.createdAt)
+    )
+
+    setChats((c) => [...c, addChat])
+  }, [onChatData])
 
   if (loading || error) return <>loading...</>
 

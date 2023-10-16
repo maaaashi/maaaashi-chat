@@ -41,6 +41,8 @@ export const UserSendMessage = () => {
     sendMessage({
       variables: input,
     })
+
+    setContent('')
   }
 
   return (
