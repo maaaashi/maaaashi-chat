@@ -22,3 +22,9 @@ mutation SendMessage($input: DynamoDBInput!) {
     ...AllData
   }
 }
+
+subscription OnChat($pk: String!) {
+  onChat(pk: $pk) {
+    ...AllData
+  }
+}

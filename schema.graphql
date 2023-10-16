@@ -22,3 +22,7 @@ type Query {
   listData(type: String!, createdAt: String!): [DynamoDBData!]!
   listTypeData(pk: String!, type: String!): [DynamoDBData!]!
 }
+
+type Subscription {
+  onChat(pk: String!): DynamoDBData @aws_subscribe(mutations: ["sendMessage"])
+}

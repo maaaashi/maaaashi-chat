@@ -1,6 +1,7 @@
 schema {
   query: Query
   mutation: Mutation
+  subscription: Subscription
 }
 
 type DynamoDBData {
@@ -26,4 +27,8 @@ type Mutation {
 type Query {
   listData(createdAt: String!, type: String!): [DynamoDBData!]!
   listTypeData(pk: String!, type: String!): [DynamoDBData!]!
+}
+
+type Subscription {
+  onChat(pk: String!): DynamoDBData @aws_subscribe(mutations: ["sendMessage"])
 }

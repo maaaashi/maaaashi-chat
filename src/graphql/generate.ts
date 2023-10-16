@@ -62,6 +62,16 @@ export type QueryListTypeDataArgs = {
   type: Scalars['String']['input'];
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  onChat?: Maybe<DynamoDbData>;
+};
+
+
+export type SubscriptionOnChatArgs = {
+  pk: Scalars['String']['input'];
+};
+
 export type AllDataFragment = { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string };
 
 export type ListChannelsQueryVariables = Exact<{
@@ -84,6 +94,13 @@ export type SendMessageMutationVariables = Exact<{
 
 
 export type SendMessageMutation = { __typename?: 'Mutation', sendMessage?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
+
+export type OnChatSubscriptionVariables = Exact<{
+  pk: Scalars['String']['input'];
+}>;
+
+
+export type OnChatSubscription = { __typename?: 'Subscription', onChat?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
 
 export const AllDataFragmentDoc = gql`
     fragment AllData on DynamoDBData {
@@ -196,3 +213,33 @@ export function useSendMessageMutation(baseOptions?: Apollo.MutationHookOptions<
 export type SendMessageMutationHookResult = ReturnType<typeof useSendMessageMutation>;
 export type SendMessageMutationResult = Apollo.MutationResult<SendMessageMutation>;
 export type SendMessageMutationOptions = Apollo.BaseMutationOptions<SendMessageMutation, SendMessageMutationVariables>;
+export const OnChatDocument = gql`
+    subscription OnChat($pk: String!) {
+  onChat(pk: $pk) {
+    ...AllData
+  }
+}
+    ${AllDataFragmentDoc}`;
+
+/**
+ * __useOnChatSubscription__
+ *
+ * To run a query within a React component, call `useOnChatSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useOnChatSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOnChatSubscription({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useOnChatSubscription(baseOptions: Apollo.SubscriptionHookOptions<OnChatSubscription, OnChatSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<OnChatSubscription, OnChatSubscriptionVariables>(OnChatDocument, options);
+      }
+export type OnChatSubscriptionHookResult = ReturnType<typeof useOnChatSubscription>;
+export type OnChatSubscriptionResult = Apollo.SubscriptionResult<OnChatSubscription>;
