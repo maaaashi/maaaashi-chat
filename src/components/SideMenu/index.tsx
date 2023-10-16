@@ -9,12 +9,14 @@ import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { channelsAtom } from '@/atoms/channels'
 import { selectChannelAtom } from '@/atoms/selectChannel'
 import { BsChatLeft } from 'react-icons/bs'
+import { openModalAtom } from '@/atoms/openModal'
 
 export const SideMenu = () => {
   const [collapsed, setCollapsed] = useState(false)
   const [toggle, setToggle] = useRecoilState(toggleAtom)
   const channels = useRecoilValue(channelsAtom)
   const [selectChannel, setSelectChannel] = useRecoilState(selectChannelAtom)
+  const setOpenModal = useSetRecoilState(openModalAtom)
 
   return (
     <Sidebar
@@ -42,7 +44,10 @@ export const SideMenu = () => {
             {"Maaaashi's ChatApp"}
           </h1>
           <div className='p-2'>
-            <button className='btn btn-info w-full'>
+            <button
+              className='btn btn-info w-full'
+              onClick={() => setOpenModal(true)}
+            >
               {collapsed ? <AiOutlinePlusCircle /> : '部屋作成'}
             </button>
           </div>
