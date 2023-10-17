@@ -1,18 +1,40 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { FC, MouseEventHandler, useEffect, useState } from 'react'
 import { Menu, MenuItem, Sidebar } from 'react-pro-sidebar'
 import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { toggleAtom } from '@/atoms/toggle'
-import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { AiOutlinePlusCircle, AiTwotoneEdit } from 'react-icons/ai'
 import { channelsAtom } from '@/atoms/channels'
 import { selectChannelAtom } from '@/atoms/selectChannel'
-import { BsChatLeft } from 'react-icons/bs'
+import { BsChatLeft, BsTrash3Fill } from 'react-icons/bs'
 import { openModalAtom } from '@/atoms/openModal'
 import { useOnChannelSubscription } from '@/graphql/generate'
 import { Channel } from '@/domains/channel'
 import { modeAtom } from '@/atoms/mode'
+import { useSession } from 'next-auth/react'
+
+const Suffix: FC<{ channel: Channel }> = ({ channel }) => {
+  const clickHandler: MouseEventHandler = (e) => {
+    e.preventDefault()
+  }
+
+  const session = useSession()
+  if (channel.username === session.data?.user?.name) {
+    return (
+      <div className='flex'>
+        <button className='btn btn-sm btn-warning' onClick={clickHandler}>
+          <AiTwotoneEdit />
+        </button>
+        <button className='btn btn-sm btn-error' onClick={clickHandler}>
+          <BsTrash3Fill />
+        </button>
+      </div>
+    )
+  }
+  return <></>
+}
 
 export const SideMenu = () => {
   const [collapsed, setCollapsed] = useState(false)
@@ -27,9 +49,9 @@ export const SideMenu = () => {
     if (!data || !data.onChannel) return
 
     const newChannel = data.onChannel
-    const { name } = JSON.parse(data.onChannel.value)
+    const { name, username } = JSON.parse(data.onChannel.value)
 
-    setChannels((c) => [...c, new Channel(newChannel.pk, name)])
+    setChannels((c) => [...c, new Channel(newChannel.pk, name, username)])
   }, [data, setChannels])
 
   return (
@@ -72,11 +94,13 @@ export const SideMenu = () => {
             <MenuItem
               key={index}
               icon={<BsChatLeft />}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault()
                 setSelectChannel(channel)
                 setMode('chat')
               }}
               active={selectChannel === channel}
+              suffix={<Suffix channel={channel} />}
             >
               {channel.name}
             </MenuItem>

@@ -37,9 +37,9 @@ export const Main = () => {
   useEffect(() => {
     if (error || loading || !data) return
     const channels = data.listData.map(({ pk, value }) => {
-      const { name } = JSON.parse(value)
+      const { name, username } = JSON.parse(value)
 
-      return new Channel(pk, name)
+      return new Channel(pk, name, username)
     })
 
     setChannels(channels)

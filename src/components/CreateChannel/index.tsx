@@ -38,7 +38,11 @@ export const CreateChannel = () => {
 
     const { name } = JSON.parse(response.data?.createChannel?.value)
 
-    const newChannel = new Channel(response.data?.createChannel?.pk, name)
+    const newChannel = new Channel(
+      response.data?.createChannel?.pk,
+      name,
+      session.data?.user?.name ?? ''
+    )
 
     setSelectChannel(newChannel)
     setOpenModal(false)
