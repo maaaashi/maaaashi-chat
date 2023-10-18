@@ -7,6 +7,7 @@ import { SideMenu } from '@/components/SideMenu'
 import { Header } from '@/components/Header'
 import { Main } from '@/components/Main'
 import { CreateChannel } from '@/components/CreateChannel'
+import { EditChannel } from '@/components/EditChannel'
 
 export default function Home() {
   const { data: session, status } = useSession()
@@ -29,6 +30,7 @@ export default function Home() {
         <SideMenu />
         <main className='flex-1 bg-base-100 flex flex-col'>
           <CreateChannel />
+          <EditChannel />
           <Main />
         </main>
       </div>

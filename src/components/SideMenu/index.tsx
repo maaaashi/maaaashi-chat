@@ -2,8 +2,7 @@
 
 import React, { FC, MouseEventHandler, useEffect, useState } from 'react'
 import { Menu, MenuItem, Sidebar } from 'react-pro-sidebar'
-import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { toggleAtom } from '@/atoms/toggle'
 import { AiOutlinePlusCircle, AiTwotoneEdit } from 'react-icons/ai'
 import { channelsAtom } from '@/atoms/channels'
@@ -14,20 +13,37 @@ import { useOnChannelSubscription } from '@/graphql/generate'
 import { Channel } from '@/domains/channel'
 import { modeAtom } from '@/atoms/mode'
 import { useSession } from 'next-auth/react'
+import { Confirm } from '@/lib/sweetAlert2'
+import { editChannelAtom } from '@/atoms/editChannel'
 
 const Suffix: FC<{ channel: Channel }> = ({ channel }) => {
-  const clickHandler: MouseEventHandler = (e) => {
-    e.preventDefault()
+  const setEditChannel = useSetRecoilState(editChannelAtom)
+
+  const editHandler: MouseEventHandler = async (e) => {
+    e.stopPropagation()
+    setEditChannel(channel)
+  }
+
+  const deleteHandler: MouseEventHandler = async (e) => {
+    e.stopPropagation()
+    const confirm = await Confirm.fire({
+      title: `${channel.name}を削除します。`,
+      text: 'よろしいでしょうか？',
+    })
+
+    if (!confirm.isConfirmed) return
+
+    // TODO: 削除処理
   }
 
   const session = useSession()
   if (channel.username === session.data?.user?.name) {
     return (
       <div className='flex'>
-        <button className='btn btn-sm btn-warning' onClick={clickHandler}>
+        <button className='btn btn-sm btn-warning' onClick={editHandler}>
           <AiTwotoneEdit />
         </button>
-        <button className='btn btn-sm btn-error' onClick={clickHandler}>
+        <button className='btn btn-sm btn-error' onClick={deleteHandler}>
           <BsTrash3Fill />
         </button>
       </div>
@@ -95,7 +111,6 @@ export const SideMenu = () => {
               key={index}
               icon={<BsChatLeft />}
               onClick={(e) => {
-                e.preventDefault()
                 setSelectChannel(channel)
                 setMode('chat')
               }}

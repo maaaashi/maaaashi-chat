@@ -35,6 +35,12 @@ mutation CreateChannel($input: DynamoDBInput!) {
   }
 }
 
+mutation UpdateChannel($input: DynamoDBInput!) {
+  createChannel(input: $input) {
+    ...AllData
+  }
+}
+
 subscription OnChannel {
   onChannel {
     ...AllData
