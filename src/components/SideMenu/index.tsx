@@ -11,7 +11,9 @@ import { BsChatLeft, BsTrash3Fill } from 'react-icons/bs'
 import { openModalAtom } from '@/atoms/openModal'
 import {
   useDeleteChannelMutation,
-  useOnChannelSubscription,
+  useOnCreateChannelSubscription,
+  useOnDeleteChannelSubscription,
+  useOnUpdateChannelSubscription,
 } from '@/graphql/generate'
 import { Channel } from '@/domains/channel'
 import { modeAtom } from '@/atoms/mode'
@@ -67,16 +69,46 @@ export const SideMenu = () => {
   const [selectChannel, setSelectChannel] = useRecoilState(selectChannelAtom)
   const setOpenModal = useSetRecoilState(openModalAtom)
   const setMode = useSetRecoilState(modeAtom)
-  const { data } = useOnChannelSubscription()
+  const { data: onCreateChannelData } = useOnCreateChannelSubscription()
+  const { data: onUpdateChannelData } = useOnUpdateChannelSubscription()
+  const { data: onDeleteChannelData } = useOnDeleteChannelSubscription()
 
   useEffect(() => {
-    if (!data || !data.onChannel) return
+    if (!onCreateChannelData || !onCreateChannelData.onCreateChannel) return
 
-    const newChannel = data.onChannel
-    const { name, username } = JSON.parse(data.onChannel.value)
+    const newChannel = onCreateChannelData.onCreateChannel
+    const { name, username } = JSON.parse(
+      onCreateChannelData.onCreateChannel.value
+    )
 
     setChannels((c) => [...c, new Channel(newChannel.pk, name, username)])
-  }, [data, setChannels])
+  }, [onCreateChannelData, setChannels])
+
+  useEffect(() => {
+    if (!onUpdateChannelData || !onUpdateChannelData.onUpdateChannel) return
+
+    const updateChannel = onUpdateChannelData.onUpdateChannel
+    const { name, username } = JSON.parse(
+      onUpdateChannelData.onUpdateChannel.value
+    )
+
+    setChannels((c) =>
+      c.map((channel) => {
+        if (channel.id === updateChannel.pk) {
+          return new Channel(updateChannel.pk, name, username)
+        }
+        return channel
+      })
+    )
+  }, [onUpdateChannelData, setChannels])
+
+  useEffect(() => {
+    if (!onDeleteChannelData || !onDeleteChannelData.onDeleteChannel) return
+
+    const deleteChannel = onDeleteChannelData.onDeleteChannel
+
+    setChannels((c) => c.filter((channel) => channel.id !== deleteChannel.pk))
+  }, [onDeleteChannelData, setChannels])
 
   return (
     <Sidebar

@@ -95,8 +95,10 @@ export type QueryListTypeDataArgs = {
 
 export type Subscription = {
   __typename?: 'Subscription';
-  onChannel?: Maybe<DynamoDbData>;
   onChat?: Maybe<DynamoDbData>;
+  onCreateChannel?: Maybe<DynamoDbData>;
+  onDeleteChannel?: Maybe<DynamoDbData>;
+  onUpdateChannel?: Maybe<DynamoDbData>;
 };
 
 
@@ -155,10 +157,20 @@ export type DeleteChannelMutationVariables = Exact<{
 
 export type DeleteChannelMutation = { __typename?: 'Mutation', deleteChannel?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
 
-export type OnChannelSubscriptionVariables = Exact<{ [key: string]: never; }>;
+export type OnCreateChannelSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OnChannelSubscription = { __typename?: 'Subscription', onChannel?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
+export type OnCreateChannelSubscription = { __typename?: 'Subscription', onCreateChannel?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
+
+export type OnUpdateChannelSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type OnUpdateChannelSubscription = { __typename?: 'Subscription', onUpdateChannel?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
+
+export type OnDeleteChannelSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type OnDeleteChannelSubscription = { __typename?: 'Subscription', onDeleteChannel?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
 
 export type PutProfileMutationVariables = Exact<{
   input: DynamoDbInput;
@@ -414,35 +426,93 @@ export function useDeleteChannelMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteChannelMutationHookResult = ReturnType<typeof useDeleteChannelMutation>;
 export type DeleteChannelMutationResult = Apollo.MutationResult<DeleteChannelMutation>;
 export type DeleteChannelMutationOptions = Apollo.BaseMutationOptions<DeleteChannelMutation, DeleteChannelMutationVariables>;
-export const OnChannelDocument = gql`
-    subscription OnChannel {
-  onChannel {
+export const OnCreateChannelDocument = gql`
+    subscription OnCreateChannel {
+  onCreateChannel {
     ...AllData
   }
 }
     ${AllDataFragmentDoc}`;
 
 /**
- * __useOnChannelSubscription__
+ * __useOnCreateChannelSubscription__
  *
- * To run a query within a React component, call `useOnChannelSubscription` and pass it any options that fit your needs.
- * When your component renders, `useOnChannelSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useOnCreateChannelSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useOnCreateChannelSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useOnChannelSubscription({
+ * const { data, loading, error } = useOnCreateChannelSubscription({
  *   variables: {
  *   },
  * });
  */
-export function useOnChannelSubscription(baseOptions?: Apollo.SubscriptionHookOptions<OnChannelSubscription, OnChannelSubscriptionVariables>) {
+export function useOnCreateChannelSubscription(baseOptions?: Apollo.SubscriptionHookOptions<OnCreateChannelSubscription, OnCreateChannelSubscriptionVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useSubscription<OnChannelSubscription, OnChannelSubscriptionVariables>(OnChannelDocument, options);
+        return Apollo.useSubscription<OnCreateChannelSubscription, OnCreateChannelSubscriptionVariables>(OnCreateChannelDocument, options);
       }
-export type OnChannelSubscriptionHookResult = ReturnType<typeof useOnChannelSubscription>;
-export type OnChannelSubscriptionResult = Apollo.SubscriptionResult<OnChannelSubscription>;
+export type OnCreateChannelSubscriptionHookResult = ReturnType<typeof useOnCreateChannelSubscription>;
+export type OnCreateChannelSubscriptionResult = Apollo.SubscriptionResult<OnCreateChannelSubscription>;
+export const OnUpdateChannelDocument = gql`
+    subscription OnUpdateChannel {
+  onUpdateChannel {
+    ...AllData
+  }
+}
+    ${AllDataFragmentDoc}`;
+
+/**
+ * __useOnUpdateChannelSubscription__
+ *
+ * To run a query within a React component, call `useOnUpdateChannelSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useOnUpdateChannelSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOnUpdateChannelSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useOnUpdateChannelSubscription(baseOptions?: Apollo.SubscriptionHookOptions<OnUpdateChannelSubscription, OnUpdateChannelSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<OnUpdateChannelSubscription, OnUpdateChannelSubscriptionVariables>(OnUpdateChannelDocument, options);
+      }
+export type OnUpdateChannelSubscriptionHookResult = ReturnType<typeof useOnUpdateChannelSubscription>;
+export type OnUpdateChannelSubscriptionResult = Apollo.SubscriptionResult<OnUpdateChannelSubscription>;
+export const OnDeleteChannelDocument = gql`
+    subscription OnDeleteChannel {
+  onDeleteChannel {
+    ...AllData
+  }
+}
+    ${AllDataFragmentDoc}`;
+
+/**
+ * __useOnDeleteChannelSubscription__
+ *
+ * To run a query within a React component, call `useOnDeleteChannelSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useOnDeleteChannelSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOnDeleteChannelSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useOnDeleteChannelSubscription(baseOptions?: Apollo.SubscriptionHookOptions<OnDeleteChannelSubscription, OnDeleteChannelSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<OnDeleteChannelSubscription, OnDeleteChannelSubscriptionVariables>(OnDeleteChannelDocument, options);
+      }
+export type OnDeleteChannelSubscriptionHookResult = ReturnType<typeof useOnDeleteChannelSubscription>;
+export type OnDeleteChannelSubscriptionResult = Apollo.SubscriptionResult<OnDeleteChannelSubscription>;
 export const PutProfileDocument = gql`
     mutation PutProfile($input: DynamoDBInput!) {
   putProfile(input: $input) {

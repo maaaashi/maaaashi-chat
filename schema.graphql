@@ -30,8 +30,7 @@ type Query {
 
 type Subscription {
   onChat(pk: String!): DynamoDBData @aws_subscribe(mutations: ["sendMessage"])
-  onChannel: DynamoDBData
-    @aws_subscribe(
-      mutations: ["createChannel", "updateChannel", "deleteChannel"]
-    )
+  onCreateChannel: DynamoDBData @aws_subscribe(mutations: ["createChannel"])
+  onUpdateChannel: DynamoDBData @aws_subscribe(mutations: ["updateChannel"])
+  onDeleteChannel: DynamoDBData @aws_subscribe(mutations: ["deleteChannel"])
 }
