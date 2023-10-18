@@ -1,9 +1,8 @@
 import { editChannelAtom } from '@/atoms/editChannel'
-import { Channel } from '@/domains/channel'
 import { useUpdateChannelMutation } from '@/graphql/generate'
 import { useSession } from 'next-auth/react'
 import React, { FC, FormEvent, useEffect, useState } from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 
 export const EditChannel: FC = () => {
   const session = useSession()
@@ -44,7 +43,7 @@ export const EditChannel: FC = () => {
       style={{ backgroundColor: 'rgba(1,1,1,0.6' }}
     >
       <div className='bg-base-100 p-5 rounded-lg'>
-        <h3 className='font-bold text-lg'>チャンネル作成</h3>
+        <h3 className='font-bold text-lg'>チャンネル更新</h3>
 
         {editChannel.name}
         <form className='flex flex-col gap-3' onSubmit={submitHandler}>

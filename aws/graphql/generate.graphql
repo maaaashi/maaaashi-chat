@@ -22,8 +22,10 @@ input DynamoDBInput {
 
 type Mutation {
   createChannel(input: DynamoDBInput!): DynamoDBData
+  deleteChannel(pk: String!): DynamoDBData
   putProfile(input: DynamoDBInput!): DynamoDBData
   sendMessage(input: DynamoDBInput!): DynamoDBData
+  updateChannel(input: DynamoDBInput!): DynamoDBData
 }
 
 type Query {
@@ -33,6 +35,6 @@ type Query {
 }
 
 type Subscription {
-  onChannel: DynamoDBData @aws_subscribe(mutations: ["createChannel"])
+  onChannel: DynamoDBData @aws_subscribe(mutations: ["createChannel", "updateChannel", "deleteChannel"])
   onChat(pk: String!): DynamoDBData @aws_subscribe(mutations: ["sendMessage"])
 }

@@ -36,7 +36,13 @@ mutation CreateChannel($input: DynamoDBInput!) {
 }
 
 mutation UpdateChannel($input: DynamoDBInput!) {
-  createChannel(input: $input) {
+  updateChannel(input: $input) {
+    ...AllData
+  }
+}
+
+mutation DeleteChannel($pk: String!) {
+  deleteChannel(pk: $pk) {
     ...AllData
   }
 }

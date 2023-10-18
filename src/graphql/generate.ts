@@ -37,13 +37,20 @@ export type DynamoDbInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createChannel?: Maybe<DynamoDbData>;
+  deleteChannel?: Maybe<DynamoDbData>;
   putProfile?: Maybe<DynamoDbData>;
   sendMessage?: Maybe<DynamoDbData>;
+  updateChannel?: Maybe<DynamoDbData>;
 };
 
 
 export type MutationCreateChannelArgs = {
   input: DynamoDbInput;
+};
+
+
+export type MutationDeleteChannelArgs = {
+  pk: Scalars['String']['input'];
 };
 
 
@@ -53,6 +60,11 @@ export type MutationPutProfileArgs = {
 
 
 export type MutationSendMessageArgs = {
+  input: DynamoDbInput;
+};
+
+
+export type MutationUpdateChannelArgs = {
   input: DynamoDbInput;
 };
 
@@ -134,7 +146,14 @@ export type UpdateChannelMutationVariables = Exact<{
 }>;
 
 
-export type UpdateChannelMutation = { __typename?: 'Mutation', createChannel?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
+export type UpdateChannelMutation = { __typename?: 'Mutation', updateChannel?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
+
+export type DeleteChannelMutationVariables = Exact<{
+  pk: Scalars['String']['input'];
+}>;
+
+
+export type DeleteChannelMutation = { __typename?: 'Mutation', deleteChannel?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
 
 export type OnChannelSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -331,7 +350,7 @@ export type CreateChannelMutationResult = Apollo.MutationResult<CreateChannelMut
 export type CreateChannelMutationOptions = Apollo.BaseMutationOptions<CreateChannelMutation, CreateChannelMutationVariables>;
 export const UpdateChannelDocument = gql`
     mutation UpdateChannel($input: DynamoDBInput!) {
-  createChannel(input: $input) {
+  updateChannel(input: $input) {
     ...AllData
   }
 }
@@ -362,6 +381,39 @@ export function useUpdateChannelMutation(baseOptions?: Apollo.MutationHookOption
 export type UpdateChannelMutationHookResult = ReturnType<typeof useUpdateChannelMutation>;
 export type UpdateChannelMutationResult = Apollo.MutationResult<UpdateChannelMutation>;
 export type UpdateChannelMutationOptions = Apollo.BaseMutationOptions<UpdateChannelMutation, UpdateChannelMutationVariables>;
+export const DeleteChannelDocument = gql`
+    mutation DeleteChannel($pk: String!) {
+  deleteChannel(pk: $pk) {
+    ...AllData
+  }
+}
+    ${AllDataFragmentDoc}`;
+export type DeleteChannelMutationFn = Apollo.MutationFunction<DeleteChannelMutation, DeleteChannelMutationVariables>;
+
+/**
+ * __useDeleteChannelMutation__
+ *
+ * To run a mutation, you first call `useDeleteChannelMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteChannelMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteChannelMutation, { data, loading, error }] = useDeleteChannelMutation({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useDeleteChannelMutation(baseOptions?: Apollo.MutationHookOptions<DeleteChannelMutation, DeleteChannelMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteChannelMutation, DeleteChannelMutationVariables>(DeleteChannelDocument, options);
+      }
+export type DeleteChannelMutationHookResult = ReturnType<typeof useDeleteChannelMutation>;
+export type DeleteChannelMutationResult = Apollo.MutationResult<DeleteChannelMutation>;
+export type DeleteChannelMutationOptions = Apollo.BaseMutationOptions<DeleteChannelMutation, DeleteChannelMutationVariables>;
 export const OnChannelDocument = gql`
     subscription OnChannel {
   onChannel {

@@ -9,7 +9,10 @@ import { channelsAtom } from '@/atoms/channels'
 import { selectChannelAtom } from '@/atoms/selectChannel'
 import { BsChatLeft, BsTrash3Fill } from 'react-icons/bs'
 import { openModalAtom } from '@/atoms/openModal'
-import { useOnChannelSubscription } from '@/graphql/generate'
+import {
+  useDeleteChannelMutation,
+  useOnChannelSubscription,
+} from '@/graphql/generate'
 import { Channel } from '@/domains/channel'
 import { modeAtom } from '@/atoms/mode'
 import { useSession } from 'next-auth/react'
@@ -18,6 +21,7 @@ import { editChannelAtom } from '@/atoms/editChannel'
 
 const Suffix: FC<{ channel: Channel }> = ({ channel }) => {
   const setEditChannel = useSetRecoilState(editChannelAtom)
+  const [deleteChannel] = useDeleteChannelMutation()
 
   const editHandler: MouseEventHandler = async (e) => {
     e.stopPropagation()
@@ -33,7 +37,11 @@ const Suffix: FC<{ channel: Channel }> = ({ channel }) => {
 
     if (!confirm.isConfirmed) return
 
-    // TODO: 削除処理
+    deleteChannel({
+      variables: {
+        pk: channel.id,
+      },
+    })
   }
 
   const session = useSession()
