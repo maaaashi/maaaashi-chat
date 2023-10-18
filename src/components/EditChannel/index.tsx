@@ -2,7 +2,7 @@ import { editChannelAtom } from '@/atoms/editChannel'
 import { Channel } from '@/domains/channel'
 import { useUpdateChannelMutation } from '@/graphql/generate'
 import { useSession } from 'next-auth/react'
-import React, { FC, FormEvent, useState } from 'react'
+import React, { FC, FormEvent, useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 export const EditChannel: FC = () => {
@@ -10,6 +10,10 @@ export const EditChannel: FC = () => {
   const [editChannel, setEditChannel] = useRecoilState(editChannelAtom)
   const [text, setText] = useState(editChannel?.name ?? '')
   const [updateChannel] = useUpdateChannelMutation()
+
+  useEffect(() => {
+    setText(editChannel?.name ?? '')
+  }, [editChannel])
 
   if (!editChannel) return <></>
 
@@ -30,6 +34,8 @@ export const EditChannel: FC = () => {
         },
       },
     })
+
+    setEditChannel(null)
   }
 
   return (
@@ -40,6 +46,7 @@ export const EditChannel: FC = () => {
       <div className='bg-base-100 p-5 rounded-lg'>
         <h3 className='font-bold text-lg'>チャンネル作成</h3>
 
+        {editChannel.name}
         <form className='flex flex-col gap-3' onSubmit={submitHandler}>
           <div className='form-control w-full max-w-xs'>
             <label className='label' htmlFor='channelName'>
@@ -66,12 +73,7 @@ export const EditChannel: FC = () => {
             >
               キャンセル
             </button>
-            <button
-              className='btn btn-primary text-[12px]'
-              onClick={() => {
-                setEditChannel(null)
-              }}
-            >
+            <button className='btn btn-primary text-[12px]' type='submit'>
               作成
             </button>
           </div>
