@@ -141,7 +141,7 @@ export class ChatAppStack extends Stack {
     dynamodbDatasource.createResolver('deleteChannelResolver', {
       typeName: 'Mutation',
       fieldName: 'deleteChannel',
-      requestMappingTemplate: MappingTemplate.dynamoDbDeleteItem('pk', 'pk'),
+      requestMappingTemplate: MappingTemplate.dynamoDbDeleteItem('pk', 'sk'),
       responseMappingTemplate: MappingTemplate.dynamoDbResultItem(),
     })
 
