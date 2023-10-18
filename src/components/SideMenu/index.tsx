@@ -42,7 +42,6 @@ const Suffix: FC<{ channel: Channel }> = ({ channel }) => {
     deleteChannel({
       variables: {
         pk: channel.id,
-        sk: channel.id,
       },
     })
   }

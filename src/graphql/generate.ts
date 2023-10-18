@@ -51,7 +51,6 @@ export type MutationCreateChannelArgs = {
 
 export type MutationDeleteChannelArgs = {
   pk: Scalars['String']['input'];
-  sk: Scalars['String']['input'];
 };
 
 
@@ -153,7 +152,6 @@ export type UpdateChannelMutation = { __typename?: 'Mutation', updateChannel?: {
 
 export type DeleteChannelMutationVariables = Exact<{
   pk: Scalars['String']['input'];
-  sk: Scalars['String']['input'];
 }>;
 
 
@@ -396,8 +394,8 @@ export type UpdateChannelMutationHookResult = ReturnType<typeof useUpdateChannel
 export type UpdateChannelMutationResult = Apollo.MutationResult<UpdateChannelMutation>;
 export type UpdateChannelMutationOptions = Apollo.BaseMutationOptions<UpdateChannelMutation, UpdateChannelMutationVariables>;
 export const DeleteChannelDocument = gql`
-    mutation DeleteChannel($pk: String!, $sk: String!) {
-  deleteChannel(pk: $pk, sk: $sk) {
+    mutation DeleteChannel($pk: String!) {
+  deleteChannel(pk: $pk) {
     ...AllData
   }
 }
@@ -418,7 +416,6 @@ export type DeleteChannelMutationFn = Apollo.MutationFunction<DeleteChannelMutat
  * const [deleteChannelMutation, { data, loading, error }] = useDeleteChannelMutation({
  *   variables: {
  *      pk: // value for 'pk'
- *      sk: // value for 'sk'
  *   },
  * });
  */

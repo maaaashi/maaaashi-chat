@@ -17,7 +17,7 @@ input DynamoDBInput {
 type Mutation {
   createChannel(input: DynamoDBInput!): DynamoDBData
   updateChannel(input: DynamoDBInput!): DynamoDBData
-  deleteChannel(pk: String!, sk: String!): DynamoDBData
+  deleteChannel(pk: String!): DynamoDBData
   sendMessage(input: DynamoDBInput!): DynamoDBData
   putProfile(input: DynamoDBInput!): DynamoDBData
 }
