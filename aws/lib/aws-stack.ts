@@ -18,6 +18,12 @@ import {
   Values,
 } from 'aws-cdk-lib/aws-appsync'
 import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb'
+import {
+  Function,
+  IFunction,
+  Runtime,
+  Code as LambdaCode,
+} from 'aws-cdk-lib/aws-lambda'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { Construct } from 'constructs'
 import path = require('path')
@@ -26,7 +32,7 @@ export class ChatAppStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props)
 
-    new Bucket(this, 'ChatAppImageBucket', {
+    const imaegBucket = new Bucket(this, 'ChatAppImageBucket', {
       bucketName: 'ChatAppImageBucket',
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
@@ -85,6 +91,26 @@ export class ChatAppStack extends Stack {
       'DynamoDBDataSource',
       table
     )
+
+    const createUploadImageUrlFunc: IFunction = new Function(
+      this,
+      'createUploadImageUrlFunc',
+      {
+        runtime: Runtime.NODEJS_18_X,
+        handler: 'index.handler',
+        code: LambdaCode.fromAsset(
+          path.join(
+            __dirname,
+            './appsync/lambdaDataSource/createUploadImageUrl/'
+          )
+        ),
+        environment: {
+          S3_BUCKET_NAME: imaegBucket.bucketName,
+        },
+      }
+    )
+
+    api.addLambdaDataSource('CreateUploadImageUrl', createUploadImageUrlFunc)
 
     dynamodbDatasource.createResolver('ListChannelsResolver', {
       typeName: 'Query',
