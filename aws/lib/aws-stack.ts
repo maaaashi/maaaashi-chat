@@ -45,7 +45,7 @@ export class ChatAppStack extends Stack {
             HttpMethods.POST,
             HttpMethods.DELETE,
           ],
-          allowedOrigins: ['*'], // 実際のプロダクション環境では'*'ではなく、具体的なドメインを指定してください
+          allowedOrigins: ['*'],
         },
       ],
     })
