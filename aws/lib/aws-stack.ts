@@ -24,7 +24,7 @@ import {
   Runtime,
   Code as LambdaCode,
 } from 'aws-cdk-lib/aws-lambda'
-import { Bucket } from 'aws-cdk-lib/aws-s3'
+import { Bucket, HttpMethods } from 'aws-cdk-lib/aws-s3'
 import { Construct } from 'constructs'
 import path = require('path')
 
@@ -36,6 +36,18 @@ export class ChatAppStack extends Stack {
       bucketName: 'maaaashi-chatapp-image-bucket',
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
+      cors: [
+        {
+          allowedHeaders: ['*'],
+          allowedMethods: [
+            HttpMethods.GET,
+            HttpMethods.PUT,
+            HttpMethods.POST,
+            HttpMethods.DELETE,
+          ],
+          allowedOrigins: ['*'], // 実際のプロダクション環境では'*'ではなく、具体的なドメインを指定してください
+        },
+      ],
     })
 
     const api = new GraphqlApi(this, 'ChatAppApi', {
