@@ -33,7 +33,7 @@ export class ChatAppStack extends Stack {
     super(scope, id, props)
 
     const imaegBucket = new Bucket(this, 'ChatAppImageBucket', {
-      bucketName: 'ChatAppImageBucket',
+      bucketName: 'maaaashi-chatapp-image-bucket',
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     })
