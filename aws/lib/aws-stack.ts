@@ -2,6 +2,7 @@ import { CfnOutput, Duration, Expiration, Stack, StackProps } from 'aws-cdk-lib'
 import {
   AuthorizationType,
   Code,
+  FunctionRuntime,
   GraphqlApi,
   KeyCondition,
   MappingTemplate,
@@ -142,6 +143,7 @@ export class ChatAppStack extends Stack {
     dynamodbDatasource.createResolver('deleteChannelResolver', {
       typeName: 'Mutation',
       fieldName: 'deleteChannel',
+      runtime: FunctionRuntime.JS_1_0_0,
       code: Code.fromAsset(
         path.join(__dirname, './appsync/funcitonCode/deleteDynamoDBData.js')
       ),
