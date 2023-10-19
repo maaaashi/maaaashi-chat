@@ -60,30 +60,38 @@ export const UserSendMessage = () => {
     )
       return
 
-    const { data } = await createUploadUrl({
-      variables: {
-        filename: fileRef.current.files[0].name,
-      },
-    })
+    try {
+      const { data } = await createUploadUrl({
+        variables: {
+          filename: fileRef.current.files[0].name,
+        },
+      })
 
-    if (!data || !data.createUploadUrl) return
+      if (!data || !data.createUploadUrl) return
 
-    const { url } = JSON.parse(data.createUploadUrl)
+      const { url } = JSON.parse(data.createUploadUrl)
 
-    const hoge = await fetch(url, {
-      method: 'PUT',
-      body: fileRef.current.files[0],
-      headers: {
-        'Content-Type': fileRef.current.files[0].type,
-        'Access-Control-Allow-Origin': '*',
-      },
-    })
+      console.log(url)
 
-    console.log(hoge)
+      const hoge = await fetch(url, {
+        method: 'PUT',
+        body: fileRef.current.files[0],
+        headers: {
+          'Content-Type': fileRef.current.files[0].type,
+        },
+      })
 
-    const json = await hoge.json()
+      console.log(hoge)
 
-    console.log(json)
+      const json = await hoge.json()
+
+      console.log(json)
+    } catch (error) {
+      alert('comming soon')
+      console.error(error)
+    }
+
+    fileRef.current.value = ''
   }
 
   return (

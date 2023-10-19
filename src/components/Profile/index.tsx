@@ -49,6 +49,8 @@ export const Profile = () => {
               />
             </div>
           )}
+
+          <input type='file' className='file-input w-full max-w-xs' />
         </div>
         <div>
           <label className='label' htmlFor='username'>

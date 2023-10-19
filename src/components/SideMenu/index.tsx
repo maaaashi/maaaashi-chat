@@ -133,8 +133,16 @@ export const SideMenu = () => {
             },
           }}
         >
-          <h1 className='py-4 text-center text-lg font-bold'>
-            {"Maaaashi's ChatApp"}
+          <h1 className='p-3 flex justify-center items-center'>
+            <button
+              className='btn btn-lg text-center text-lg font-bold items-center flex justify-center'
+              onClick={() => {
+                setMode('chat')
+                setSelectChannel(null)
+              }}
+            >
+              {"Maaaashi's Chat"}
+            </button>
           </h1>
           <div className='p-2'>
             <button
