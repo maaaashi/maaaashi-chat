@@ -118,6 +118,7 @@ export class ChatAppStack extends Stack {
         ),
         environment: {
           S3_BUCKET_NAME: imaegBucket.bucketName,
+          S3_REGION: this.region,
         },
       }
     )
