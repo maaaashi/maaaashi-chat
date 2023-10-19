@@ -194,6 +194,13 @@ export type GetProfileQueryVariables = Exact<{
 
 export type GetProfileQuery = { __typename?: 'Query', getProfile?: { __typename?: 'DynamoDBData', pk: string, sk: string, value: string, createdAt: string } | null };
 
+export type CreateUploadUrlQueryVariables = Exact<{
+  filename: Scalars['String']['input'];
+}>;
+
+
+export type CreateUploadUrlQuery = { __typename?: 'Query', createUploadUrl: string };
+
 export const AllDataFragmentDoc = gql`
     fragment AllData on DynamoDBData {
   pk
@@ -590,3 +597,36 @@ export function useGetProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetProfileQueryHookResult = ReturnType<typeof useGetProfileQuery>;
 export type GetProfileLazyQueryHookResult = ReturnType<typeof useGetProfileLazyQuery>;
 export type GetProfileQueryResult = Apollo.QueryResult<GetProfileQuery, GetProfileQueryVariables>;
+export const CreateUploadUrlDocument = gql`
+    query CreateUploadUrl($filename: String!) {
+  createUploadUrl(filename: $filename)
+}
+    `;
+
+/**
+ * __useCreateUploadUrlQuery__
+ *
+ * To run a query within a React component, call `useCreateUploadUrlQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCreateUploadUrlQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCreateUploadUrlQuery({
+ *   variables: {
+ *      filename: // value for 'filename'
+ *   },
+ * });
+ */
+export function useCreateUploadUrlQuery(baseOptions: Apollo.QueryHookOptions<CreateUploadUrlQuery, CreateUploadUrlQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CreateUploadUrlQuery, CreateUploadUrlQueryVariables>(CreateUploadUrlDocument, options);
+      }
+export function useCreateUploadUrlLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CreateUploadUrlQuery, CreateUploadUrlQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CreateUploadUrlQuery, CreateUploadUrlQueryVariables>(CreateUploadUrlDocument, options);
+        }
+export type CreateUploadUrlQueryHookResult = ReturnType<typeof useCreateUploadUrlQuery>;
+export type CreateUploadUrlLazyQueryHookResult = ReturnType<typeof useCreateUploadUrlLazyQuery>;
+export type CreateUploadUrlQueryResult = Apollo.QueryResult<CreateUploadUrlQuery, CreateUploadUrlQueryVariables>;

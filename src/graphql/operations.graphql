@@ -76,3 +76,7 @@ query GetProfile($pk: String!) {
     ...AllData
   }
 }
+
+query CreateUploadUrl($filename: String!) {
+  createUploadUrl(filename: $filename)
+}
