@@ -1,4 +1,11 @@
-import { CfnOutput, Duration, Expiration, Stack, StackProps } from 'aws-cdk-lib'
+import {
+  CfnOutput,
+  Duration,
+  Expiration,
+  RemovalPolicy,
+  Stack,
+  StackProps,
+} from 'aws-cdk-lib'
 import {
   AuthorizationType,
   Code,
@@ -7,17 +14,23 @@ import {
   KeyCondition,
   MappingTemplate,
   PrimaryKey,
-  Resolver,
   SchemaFile,
   Values,
 } from 'aws-cdk-lib/aws-appsync'
 import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb'
+import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { Construct } from 'constructs'
 import path = require('path')
 
 export class ChatAppStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props)
+
+    new Bucket(this, 'ChatAppImageBucket', {
+      bucketName: 'ChatAppImageBucket',
+      removalPolicy: RemovalPolicy.DESTROY,
+      autoDeleteObjects: true,
+    })
 
     const api = new GraphqlApi(this, 'ChatAppApi', {
       name: 'ChatApp-AppSync',

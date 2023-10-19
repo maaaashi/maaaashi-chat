@@ -133,7 +133,7 @@ export const SideMenu = () => {
             },
           }}
         >
-          <h1 className='p-3 text-center text-lg font-bold'>
+          <h1 className='py-4 text-center text-lg font-bold'>
             {"Maaaashi's ChatApp"}
           </h1>
           <div className='p-2'>

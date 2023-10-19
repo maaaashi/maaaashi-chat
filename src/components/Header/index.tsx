@@ -116,7 +116,7 @@ export const Header = () => {
       </div>
       <div className='self-end gap-2'>
         <div className='dropdown dropdown-end flex'>{profile()}</div>
-        <div className='dropdown dropdown-end flex'>
+        {/* <div className='dropdown dropdown-end flex'>
           <div>
             <label
               tabIndex={0}
@@ -153,7 +153,7 @@ export const Header = () => {
               ))}
             </ul>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )
