@@ -71,9 +71,15 @@ export type MutationUpdateChannelArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  createUploadUrl: Scalars['String']['output'];
   getProfile?: Maybe<DynamoDbData>;
   listData: Array<DynamoDbData>;
   listTypeData: Array<DynamoDbData>;
+};
+
+
+export type QueryCreateUploadUrlArgs = {
+  filename: Scalars['String']['input'];
 };
 
 

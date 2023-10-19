@@ -110,7 +110,10 @@ export class ChatAppStack extends Stack {
       }
     )
 
-    api.addLambdaDataSource('CreateUploadImageUrl', createUploadImageUrlFunc)
+    const lambdaDataSource = api.addLambdaDataSource(
+      'CreateUploadImageUrl',
+      createUploadImageUrlFunc
+    )
 
     dynamodbDatasource.createResolver('ListChannelsResolver', {
       typeName: 'Query',
@@ -211,6 +214,11 @@ export class ChatAppStack extends Stack {
         'LS1'
       ),
       responseMappingTemplate: MappingTemplate.dynamoDbResultItem(),
+    })
+
+    lambdaDataSource.createResolver('createUploadImageUrlResolver', {
+      typeName: 'Query',
+      fieldName: 'createUploadUrl',
     })
 
     new CfnOutput(this, 'GraphQL Endpoint', {

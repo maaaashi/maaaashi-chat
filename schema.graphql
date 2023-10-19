@@ -26,6 +26,7 @@ type Query {
   listData(type: String!, createdAt: String!): [DynamoDBData!]!
   listTypeData(pk: String!, type: String!): [DynamoDBData!]!
   getProfile(pk: String!, type: String!): DynamoDBData
+  createUploadUrl(filename: String!): String!
 }
 
 type Subscription {

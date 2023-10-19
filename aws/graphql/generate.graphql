@@ -29,6 +29,7 @@ type Mutation {
 }
 
 type Query {
+  createUploadUrl(filename: String!): String!
   getProfile(pk: String!, type: String!): DynamoDBData
   listData(createdAt: String!, type: String!): [DynamoDBData!]!
   listTypeData(pk: String!, type: String!): [DynamoDBData!]!
