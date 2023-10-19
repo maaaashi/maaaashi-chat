@@ -95,7 +95,7 @@ export const UserSendMessage = () => {
   }
 
   return (
-    <form onSubmit={submitHandler} className='bg-base-200 w-full p-4 relative'>
+    <form onSubmit={submitHandler} className='bg-slate-300 w-full p-4 relative'>
       <button
         className='btn btn-ghost'
         type='button'

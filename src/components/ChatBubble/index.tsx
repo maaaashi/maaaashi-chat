@@ -40,7 +40,13 @@ export const ChatBubble: FC<Props> = ({ chat }) => {
         {chat.username}{' '}
         <time className='text-xs opacity-50'>{formatDate(chat.createdAt)}</time>
       </div>
-      <div className='chat-bubble chat-bubble-info'>{chat.content}</div>
+      <div
+        className={`chat-bubble ${
+          session.data?.user?.name === chat.username ? '' : 'chat-bubble-info'
+        }`}
+      >
+        {chat.content}
+      </div>
     </div>
   )
 }

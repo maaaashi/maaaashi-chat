@@ -104,7 +104,7 @@ export const Header = () => {
   }
 
   return (
-    <div className='navbar bg-base-300 justify-between'>
+    <div className='navbar bg-slate-300 justify-between px-4'>
       <div>
         <button
           onClick={() => setToggle((c) => !c)}
@@ -112,7 +112,7 @@ export const Header = () => {
         >
           <GiHamburgerMenu />
         </button>
-        <h2>{selectChannel?.name}</h2>
+        <h2 className='font-bold'>{selectChannel?.name}</h2>
       </div>
       <div className='self-end gap-2'>
         <div className='dropdown dropdown-end flex'>{profile()}</div>

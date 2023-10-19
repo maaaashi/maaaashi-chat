@@ -69,13 +69,13 @@ export const ChatArea = () => {
 
   if (loading || error)
     return (
-      <div className='h-full flex items-center justify-center'>
+      <div className='h-full flex items-center justify-center bg-slate-100'>
         <span className='loading loading-ring loading-lg'></span>
       </div>
     )
 
   return (
-    <div className='h-full flex flex-col'>
+    <div className='h-full flex flex-col bg-slate-100'>
       <div className='flex-1 overflow-y-auto p-3'>
         {chats.map((c, index) => (
           <ChatBubble chat={c} key={index} />

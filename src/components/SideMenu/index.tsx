@@ -114,7 +114,7 @@ export const SideMenu = () => {
   return (
     <Sidebar
       collapsed={collapsed}
-      backgroundColor='hsl(var(--b2) / 1)'
+      backgroundColor='#94a3b8'
       breakPoint='sm'
       toggled={toggle}
       onBackdropClick={() => setToggle((c) => !c)}
