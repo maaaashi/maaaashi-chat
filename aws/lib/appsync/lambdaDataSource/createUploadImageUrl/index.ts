@@ -7,7 +7,7 @@ type Input = {
 }
 
 export const handler: AppSyncResolverHandler<Input, any> = async (event) => {
-  const client = new S3Client({ region: 'us-west-2' }) // 適切なリージョンを指定してください
+  const client = new S3Client({ region: 'ap-northeast-1' })
   const filename = event.arguments.filename
 
   const command = new GetObjectCommand({
