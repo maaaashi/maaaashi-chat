@@ -97,7 +97,7 @@ export const UserSendMessage = () => {
   return (
     <form onSubmit={submitHandler} className='bg-slate-300 w-full p-4 relative'>
       <button
-        className='btn btn-ghost'
+        className='border p-2 rounded-lg bg-slate-200 hover hover:bg-slate-300 mb-2'
         type='button'
         onClick={() => fileRef.current?.click()}
       >
@@ -117,7 +117,7 @@ export const UserSendMessage = () => {
           setContent(e.target.value)
         }}
       ></textarea>
-      <button className='btn btn-circle btn-primary absolute top-16 right-5'>
+      <button className='btn btn-circle btn-primary absolute top-20 right-6'>
         <AiOutlineSend />
       </button>
     </form>
