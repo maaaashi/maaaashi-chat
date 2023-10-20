@@ -1,7 +1,13 @@
 'use client'
 
 import React, { FC, MouseEventHandler, useEffect, useState } from 'react'
-import { Menu, MenuItem, Sidebar } from 'react-pro-sidebar'
+import {
+  Menu,
+  MenuItem,
+  MenuItemStyles,
+  Sidebar,
+  menuClasses,
+} from 'react-pro-sidebar'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { toggleAtom } from '@/atoms/toggle'
 import { AiOutlinePlusCircle, AiTwotoneEdit } from 'react-icons/ai'
@@ -111,31 +117,83 @@ export const SideMenu = () => {
     setChannels((c) => c.filter((channel) => channel.id !== deleteChannel.pk))
   }, [onDeleteChannelData, setChannels])
 
+  const theme = 'dark'
+
+  const themes = {
+    sidebar: {
+      backgroundColor: '#334155',
+      color: '#8ba1b7',
+    },
+    menu: {
+      menuContent: '#082440',
+      icon: '#59d0ff',
+      hover: {
+        backgroundColor: '#00458b',
+        color: '#b6c8d9',
+      },
+      disabled: {
+        color: '#3e5e7e',
+      },
+    },
+  }
+
+  // hex to rgba converter
+  const hexToRgba = (hex: string, alpha: number) => {
+    const r = parseInt(hex.slice(1, 3), 16)
+    const g = parseInt(hex.slice(3, 5), 16)
+    const b = parseInt(hex.slice(5, 7), 16)
+
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`
+  }
+
+  const menuItemStyles: MenuItemStyles = {
+    root: {
+      fontSize: '13px',
+      fontWeight: 400,
+    },
+    icon: {
+      color: themes.menu.icon,
+      [`&.${menuClasses.disabled}`]: {
+        color: themes.menu.disabled.color,
+      },
+    },
+    SubMenuExpandIcon: {
+      color: '#b6b7b9',
+    },
+    subMenuContent: ({ level }) => ({
+      backgroundColor:
+        level === 0 ? hexToRgba(themes.menu.menuContent, 1) : 'transparent',
+    }),
+    button: {
+      [`&.${menuClasses.disabled}`]: {
+        color: themes.menu.disabled.color,
+      },
+      '&:hover': {
+        backgroundColor: hexToRgba(themes.menu.hover.backgroundColor, 1),
+        color: themes.menu.hover.color,
+      },
+    },
+    label: ({ open }) => ({
+      fontWeight: open ? 600 : undefined,
+    }),
+  }
+
   return (
     <Sidebar
       collapsed={collapsed}
-      backgroundColor='#94a3b8'
       breakPoint='sm'
       toggled={toggle}
       onBackdropClick={() => setToggle((c) => !c)}
+      backgroundColor={hexToRgba(themes.sidebar.backgroundColor, 1)}
+      rootStyles={{
+        color: themes.sidebar.color,
+      }}
     >
       <div className='flex flex-col h-full'>
-        <Menu
-          menuItemStyles={{
-            button: ({ level, active, disabled }) => {
-              if (active)
-                return {
-                  '--tw-border-opacity': '1',
-                  '--tw-bg-opacity': '1',
-                  borderColor: 'hsl(var(--b3) / var(--tw-border-opacity))',
-                  backgroundColor: 'hsl(var(--b3) / var(--tw-bg-opacity))',
-                }
-            },
-          }}
-        >
+        <Menu menuItemStyles={menuItemStyles}>
           <h1 className='p-3 flex justify-center items-center'>
             <button
-              className='btn btn-lg text-center text-lg font-bold items-center flex justify-center'
+              className='btn btn-lg text-center text-lg font-bold items-center flex justify-center bg-slate-300'
               onClick={() => {
                 setMode('chat')
                 setSelectChannel(null)
