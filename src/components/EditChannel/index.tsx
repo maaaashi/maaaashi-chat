@@ -42,12 +42,12 @@ export const EditChannel: FC = () => {
       className='absolute top-0 left-0 w-screen h-screen z-20 flex justify-center items-center'
       style={{ backgroundColor: 'rgba(1,1,1,0.6' }}
     >
-      <div className='bg-base-100 p-5 rounded-lg'>
+      <div className='bg-base-100 p-5 rounded-lg w-4/5 md:w-3/5'>
         <h3 className='font-bold text-lg'>チャンネル更新</h3>
 
         {editChannel.name}
         <form className='flex flex-col gap-3' onSubmit={submitHandler}>
-          <div className='form-control w-full max-w-xs'>
+          <div className='form-control w-full'>
             <label className='label' htmlFor='channelName'>
               <span className='label-text'>チャンネル名</span>
             </label>
@@ -59,7 +59,7 @@ export const EditChannel: FC = () => {
                 setText(e.target.value)
               }}
               placeholder='○○について'
-              className='input input-bordered w-full max-w-xs'
+              className='input input-bordered w-full'
             />
           </div>
 

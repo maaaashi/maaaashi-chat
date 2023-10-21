@@ -58,6 +58,7 @@ export const Header = () => {
                 className='justify-between'
                 onClick={() => {
                   setMode('profile')
+                  setSelectChannel(null)
                 }}
               >
                 Edit Profile
@@ -94,7 +95,7 @@ export const Header = () => {
         </h1>
         <h2 className='font-bold'>{selectChannel?.name}</h2>
       </div>
-      <div className='self-end gap-2'>
+      <div className='gap-2'>
         <div className='dropdown dropdown-end flex'>{profile()}</div>
         {/* <div className='dropdown dropdown-end flex'>
           <div>

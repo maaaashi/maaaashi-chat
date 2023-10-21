@@ -16,8 +16,6 @@ export const Profile = () => {
 
   return (
     <div className='flex flex-col items-center p-5'>
-      <h2 className='self-start font-bold'>Edit Profile</h2>
-
       <form className='form-control w-full gap-3' onSubmit={submitHandler}>
         <div className='flex flex-col items-center'>
           <label className='label self-start' htmlFor='userimage'>
@@ -49,8 +47,6 @@ export const Profile = () => {
               />
             </div>
           )}
-
-          <input type='file' className='file-input w-full max-w-xs' />
         </div>
         <div>
           <label className='label' htmlFor='username'>

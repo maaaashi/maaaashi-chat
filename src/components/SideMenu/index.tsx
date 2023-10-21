@@ -203,18 +203,19 @@ export const SideMenu = () => {
             </button>
           </div>
           {channels.map((channel, index) => (
-            <MenuItem
-              key={index}
-              icon={<BsChatLeft />}
-              onClick={(e) => {
-                setSelectChannel(channel)
-                setMode('chat')
-              }}
-              active={selectChannel === channel}
-              suffix={<Suffix channel={channel} />}
-            >
-              {channel.name}
-            </MenuItem>
+            <div className='tooltip w-full' data-tip={channel.name} key={index}>
+              <MenuItem
+                icon={<BsChatLeft />}
+                onClick={(e) => {
+                  setSelectChannel(channel)
+                  setMode('chat')
+                }}
+                active={selectChannel === channel}
+                suffix={<Suffix channel={channel} />}
+              >
+                {channel.name}
+              </MenuItem>
+            </div>
           ))}
         </Menu>
       </div>
