@@ -191,17 +191,6 @@ export const SideMenu = () => {
     >
       <div className='flex flex-col h-full'>
         <Menu menuItemStyles={menuItemStyles}>
-          <h1 className='p-3 flex justify-center items-center'>
-            <button
-              className='btn btn-lg text-center text-lg font-bold items-center flex justify-center bg-slate-300'
-              onClick={() => {
-                setMode('chat')
-                setSelectChannel(null)
-              }}
-            >
-              {"Maaaashi's Chat"}
-            </button>
-          </h1>
           <div className='p-2'>
             <button
               className='btn btn-info w-full'

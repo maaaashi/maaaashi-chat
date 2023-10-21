@@ -7,7 +7,7 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import { AiOutlineCheck } from 'react-icons/ai'
 import { BsPalette2 } from 'react-icons/bs'
 import Avatar from 'boring-avatars'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { toggleAtom } from '@/atoms/toggle'
 import { selectChannelAtom } from '@/atoms/selectChannel'
 import { modeAtom } from '@/atoms/mode'
@@ -16,38 +16,7 @@ export const Header = () => {
   const { data: session } = useSession()
   const setToggle = useSetRecoilState(toggleAtom)
   const setMode = useSetRecoilState(modeAtom)
-  const selectChannel = useRecoilValue(selectChannelAtom)
-  const listTheme = [
-    'light',
-    'dark',
-    'cupcake',
-    'bumblebee',
-    'emerald',
-    'corporate',
-    'synthwave',
-    'retro',
-    'cyberpunk',
-    'valentine',
-    'halloween',
-    'garden',
-    'forest',
-    'aqua',
-    'lofi',
-    'pastel',
-    'fantasy',
-    'wireframe',
-    'black',
-    'luxury',
-    'dracula',
-    'cmyk',
-    'autumn',
-    'business',
-    'acid',
-    'lemonade',
-    'night',
-    'coffee',
-    'winter',
-  ]
+  const [selectChannel, setSelectChannel] = useRecoilState(selectChannelAtom)
 
   const profile = () => {
     if (!session) {
@@ -112,6 +81,17 @@ export const Header = () => {
         >
           <GiHamburgerMenu />
         </button>
+        <h1 className='p-3 flex justify-center items-center'>
+          <button
+            className='btn text-center text-lg font-bold items-center flex justify-center'
+            onClick={() => {
+              setMode('chat')
+              setSelectChannel(null)
+            }}
+          >
+            {"Maaaashi's Chat"}
+          </button>
+        </h1>
         <h2 className='font-bold'>{selectChannel?.name}</h2>
       </div>
       <div className='self-end gap-2'>

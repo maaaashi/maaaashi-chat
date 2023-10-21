@@ -2,6 +2,8 @@ import { Chat } from '@/domains/chat'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import React, { FC } from 'react'
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 interface Props {
   chat: Chat
@@ -43,9 +45,9 @@ export const ChatBubble: FC<Props> = ({ chat }) => {
       <div
         className={`chat-bubble ${
           session.data?.user?.name === chat.username ? '' : 'chat-bubble-info'
-        }`}
+        } prose-sm`}
       >
-        {chat.content}
+        <Markdown remarkPlugins={[remarkGfm]}>{chat.content}</Markdown>
       </div>
     </div>
   )
