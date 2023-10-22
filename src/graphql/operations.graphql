@@ -41,14 +41,8 @@ mutation DeleteChannel($pk: String!, $sk: String!) {
   }
 }
 
-subscription OnCreateChannel {
-  onCreateChannel {
-    ...AllData
-  }
-}
-
-subscription OnUpdateChannel {
-  onUpdateChannel {
+subscription OnPutChannel {
+  onPutChannel {
     ...AllData
   }
 }

@@ -17,9 +17,8 @@ import { BsChatLeft, BsTrash3Fill } from 'react-icons/bs'
 import { openChannelModalAtom } from '@/atoms/openChannelModal'
 import {
   useDeleteChannelMutation,
-  useOnCreateChannelSubscription,
   useOnDeleteChannelSubscription,
-  useOnUpdateChannelSubscription,
+  useOnPutChannelSubscription,
 } from '@/graphql/generate'
 import { Channel } from '@/domains/channel'
 import { modeAtom } from '@/atoms/mode'
@@ -78,38 +77,30 @@ export const SideMenu = () => {
   const [selectChannel, setSelectChannel] = useRecoilState(selectChannelAtom)
   const setOpenModal = useSetRecoilState(openChannelModalAtom)
   const setMode = useSetRecoilState(modeAtom)
-  const { data: onCreateChannelData } = useOnCreateChannelSubscription()
-  const { data: onUpdateChannelData } = useOnUpdateChannelSubscription()
+  const { data: onPutChannelData } = useOnPutChannelSubscription()
   const { data: onDeleteChannelData } = useOnDeleteChannelSubscription()
 
   useEffect(() => {
-    if (!onCreateChannelData || !onCreateChannelData.onCreateChannel) return
+    if (!onPutChannelData || !onPutChannelData.onPutChannel) return
 
-    const newChannel = onCreateChannelData.onCreateChannel
-    const { name, username } = JSON.parse(
-      onCreateChannelData.onCreateChannel.value
-    )
+    const targetChannel = onPutChannelData.onPutChannel
+    const { name, username } = JSON.parse(onPutChannelData.onPutChannel.value)
 
-    setChannels((c) => [...c, new Channel(newChannel.pk, name, username)])
-  }, [onCreateChannelData, setChannels])
+    const targetIndex = channels.findIndex((c) => c.id === targetChannel.pk)
 
-  useEffect(() => {
-    if (!onUpdateChannelData || !onUpdateChannelData.onUpdateChannel) return
-
-    const updateChannel = onUpdateChannelData.onUpdateChannel
-    const { name, username } = JSON.parse(
-      onUpdateChannelData.onUpdateChannel.value
-    )
-
-    setChannels((c) =>
-      c.map((channel) => {
-        if (channel.id === updateChannel.pk) {
-          return new Channel(updateChannel.pk, name, username)
-        }
-        return channel
-      })
-    )
-  }, [onUpdateChannelData, setChannels])
+    if (targetIndex === -1) {
+      setChannels((c) => [...c, new Channel(targetChannel.pk, name, username)])
+    } else {
+      setChannels((c) =>
+        c.map((channel, index) => {
+          if (index === targetIndex) {
+            return new Channel(targetChannel.pk, name, username)
+          }
+          return channel
+        })
+      )
+    }
+  }, [channels, onPutChannelData, setChannels])
 
   useEffect(() => {
     if (!onDeleteChannelData || !onDeleteChannelData.onDeleteChannel) return
