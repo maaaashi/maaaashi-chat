@@ -43,7 +43,7 @@ export const ChatBubble: FC<Props> = ({ chat }) => {
             {formatDate(chat.createdAt)}
           </time>
         </div>
-        <div className='flex'>
+        <div className='flex gap-2'>
           <div className='self-end flex'>
             <button className='btn btn-sm btn-warning'>
               <AiTwotoneEdit />
@@ -52,7 +52,7 @@ export const ChatBubble: FC<Props> = ({ chat }) => {
               <BsTrash3Fill />
             </button>
           </div>
-          <div className='chat-bubble prose-sm'>
+          <div className='chat-bubble min-w-[150px] prose-sm'>
             <Markdown remarkPlugins={[remarkGfm]}>{chat.content}</Markdown>
           </div>
         </div>
@@ -77,7 +77,7 @@ export const ChatBubble: FC<Props> = ({ chat }) => {
             {formatDate(chat.createdAt)}
           </time>
         </div>
-        <div className='chat-bubble chat-bubble-info prose-sm'>
+        <div className='chat-bubble min-w-[150px] chat-bubble-info prose-sm'>
           <Markdown remarkPlugins={[remarkGfm]}>{chat.content}</Markdown>
         </div>
       </div>
