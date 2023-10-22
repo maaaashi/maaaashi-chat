@@ -14,7 +14,7 @@ import { AiOutlinePlusCircle, AiTwotoneEdit } from 'react-icons/ai'
 import { channelsAtom } from '@/atoms/channels'
 import { selectChannelAtom } from '@/atoms/selectChannel'
 import { BsChatLeft, BsTrash3Fill } from 'react-icons/bs'
-import { openModalAtom } from '@/atoms/openModal'
+import { openChannelModalAtom } from '@/atoms/openChannelModal'
 import {
   useDeleteChannelMutation,
   useOnCreateChannelSubscription,
@@ -29,11 +29,13 @@ import { editChannelAtom } from '@/atoms/editChannel'
 
 const Suffix: FC<{ channel: Channel }> = ({ channel }) => {
   const setEditChannel = useSetRecoilState(editChannelAtom)
+  const setOpenModal = useSetRecoilState(openChannelModalAtom)
   const [deleteChannel] = useDeleteChannelMutation()
 
   const editHandler: MouseEventHandler = async (e) => {
     e.stopPropagation()
     setEditChannel(channel)
+    setOpenModal(true)
   }
 
   const deleteHandler: MouseEventHandler = async (e) => {
@@ -74,7 +76,7 @@ export const SideMenu = () => {
   const [toggle, setToggle] = useRecoilState(toggleAtom)
   const [channels, setChannels] = useRecoilState(channelsAtom)
   const [selectChannel, setSelectChannel] = useRecoilState(selectChannelAtom)
-  const setOpenModal = useSetRecoilState(openModalAtom)
+  const setOpenModal = useSetRecoilState(openChannelModalAtom)
   const setMode = useSetRecoilState(modeAtom)
   const { data: onCreateChannelData } = useOnCreateChannelSubscription()
   const { data: onUpdateChannelData } = useOnUpdateChannelSubscription()

@@ -21,11 +21,10 @@ input DynamoDBInput {
 }
 
 type Mutation {
-  createChannel(input: DynamoDBInput!): DynamoDBData
   deleteChannel(pk: String!, sk: String!): DynamoDBData
+  putChannel(input: DynamoDBInput!): DynamoDBData
   putProfile(input: DynamoDBInput!): DynamoDBData
   sendMessage(input: DynamoDBInput!): DynamoDBData
-  updateChannel(input: DynamoDBInput!): DynamoDBData
 }
 
 type Query {

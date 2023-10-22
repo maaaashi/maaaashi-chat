@@ -1,29 +1,35 @@
 import { editChannelAtom } from '@/atoms/editChannel'
-import { useUpdateChannelMutation } from '@/graphql/generate'
+import { openChannelModalAtom } from '@/atoms/openChannelModal'
+import { usePutChannelMutation } from '@/graphql/generate'
 import { useSession } from 'next-auth/react'
 import React, { FC, FormEvent, useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
+import { v4 as uuidv4 } from 'uuid'
 
-export const EditChannel: FC = () => {
+export const ChannelFormModal: FC = () => {
   const session = useSession()
   const [editChannel, setEditChannel] = useRecoilState(editChannelAtom)
+  const [openModal, setOpenModal] = useRecoilState(openChannelModalAtom)
   const [text, setText] = useState(editChannel?.name ?? '')
-  const [updateChannel] = useUpdateChannelMutation()
+  const [mode, setMode] = useState<'new' | 'edit'>('new')
+  const [putChannel] = usePutChannelMutation()
 
   useEffect(() => {
     setText(editChannel?.name ?? '')
+    setMode(editChannel ? 'edit' : 'new')
   }, [editChannel])
 
-  if (!editChannel) return <></>
+  if (!openModal) return <></>
 
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
+    const uuid = uuidv4()
 
-    await updateChannel({
+    await putChannel({
       variables: {
         input: {
-          pk: editChannel.id,
-          sk: editChannel.id,
+          pk: editChannel?.id ?? 'Channel-' + uuid,
+          sk: editChannel?.id ?? 'Channel-' + uuid,
           type: 'channel',
           value: JSON.stringify({
             name: text,
@@ -43,9 +49,10 @@ export const EditChannel: FC = () => {
       style={{ backgroundColor: 'rgba(1,1,1,0.6' }}
     >
       <div className='bg-base-100 p-5 rounded-lg w-4/5 md:w-3/5'>
-        <h3 className='font-bold text-lg'>チャンネル更新</h3>
+        <h3 className='font-bold text-lg'>
+          チャンネル{mode === 'new' ? '作成' : '編集'}
+        </h3>
 
-        {editChannel.name}
         <form className='flex flex-col gap-3' onSubmit={submitHandler}>
           <div className='form-control w-full'>
             <label className='label' htmlFor='channelName'>
@@ -68,6 +75,7 @@ export const EditChannel: FC = () => {
               className='btn btn-outline text-[12px]'
               onClick={() => {
                 setEditChannel(null)
+                setOpenModal(false)
               }}
             >
               キャンセル

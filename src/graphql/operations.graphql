@@ -29,14 +29,8 @@ subscription OnChat($pk: String!) {
   }
 }
 
-mutation CreateChannel($input: DynamoDBInput!) {
-  createChannel(input: $input) {
-    ...AllData
-  }
-}
-
-mutation UpdateChannel($input: DynamoDBInput!) {
-  updateChannel(input: $input) {
+mutation PutChannel($input: DynamoDBInput!) {
+  putChannel(input: $input) {
     ...AllData
   }
 }

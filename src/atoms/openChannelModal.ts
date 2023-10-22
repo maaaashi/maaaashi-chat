@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 
-export const openModalAtom = atom({
+export const openChannelModalAtom = atom({
   key: 'openModalState',
   default: false,
 })
