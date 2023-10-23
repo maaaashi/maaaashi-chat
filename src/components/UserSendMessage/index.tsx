@@ -111,7 +111,7 @@ export const UserSendMessage = () => {
       />
       <textarea
         className='textarea textarea-bordered w-full resize-none'
-        placeholder='メッセージを入力'
+        placeholder='Markdown形式で入力'
         value={content}
         onChange={(e) => {
           setContent(e.target.value)

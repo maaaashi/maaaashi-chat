@@ -82,7 +82,7 @@ export const Header = () => {
         >
           <GiHamburgerMenu />
         </button>
-        <h1 className='p-3 flex justify-center items-center'>
+        <h1 className='p-3 justify-center items-center hidden md:flex'>
           <button
             className='btn text-center text-lg font-bold items-center flex justify-center'
             onClick={() => {
