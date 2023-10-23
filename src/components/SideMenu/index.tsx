@@ -100,7 +100,8 @@ export const SideMenu = () => {
         })
       )
     }
-  }, [channels, onPutChannelData, setChannels])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onPutChannelData])
 
   useEffect(() => {
     if (!onDeleteChannelData || !onDeleteChannelData.onDeleteChannel) return
