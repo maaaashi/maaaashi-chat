@@ -9,6 +9,8 @@
 - [MAAAASHI'S CHAT](#maaaashis-chat)
 - [Installation](#installation)
 - [Usage](#usage)
+- [アーキテクチャ図](#アーキテクチャ図)
+- [DB 設計](#db-設計)
 
 # Installation
 
@@ -24,6 +26,14 @@ $ make dev
 ```
 
 Access to http://localhost:3000
+
+# アーキテクチャ図
+
+<div><img src="./docs/アーキテクチャ図.png" /></div>
+
+# DB 設計
+
+`./docs/DynamoDB設計書.md`参照
 
 <!-- # Test
 
