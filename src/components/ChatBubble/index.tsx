@@ -44,14 +44,14 @@ export const ChatBubble: FC<Props> = ({ chat }) => {
           </time>
         </div>
         <div className='flex gap-2'>
-          <div className='self-end flex'>
+          {/* <div className='self-end flex'>
             <button className='btn btn-sm btn-warning'>
               <AiTwotoneEdit />
             </button>
             <button className='btn btn-sm btn-error'>
               <BsTrash3Fill />
             </button>
-          </div>
+          </div> */}
           <div className='chat-bubble min-w-[150px] prose-sm'>
             <Markdown remarkPlugins={[remarkGfm]}>{chat.content}</Markdown>
           </div>
