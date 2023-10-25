@@ -82,16 +82,8 @@ export const Header = () => {
         >
           <GiHamburgerMenu />
         </button>
-        <h1 className='p-3 justify-center items-center hidden md:flex'>
-          <button
-            className='btn text-center text-lg font-bold items-center flex justify-center'
-            onClick={() => {
-              setMode('chat')
-              setSelectChannel(null)
-            }}
-          >
-            {"Maaaashi's Chat"}
-          </button>
+        <h1 className='p-3 text-2xl font-bold justify-center items-center hidden md:flex'>
+          {"Maaaashi's Chat"}
         </h1>
         <h2 className='font-bold'>{selectChannel?.name}</h2>
       </div>
