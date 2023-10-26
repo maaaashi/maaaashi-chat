@@ -184,18 +184,10 @@ export const SideMenu = () => {
       }}
     >
       <div className='flex flex-col h-full'>
-        <Menu menuItemStyles={menuItemStyles}>
-          <div className='p-2'>
-            <button
-              className='btn btn-info w-full'
-              onClick={() => {
-                setOpenModal(true)
-                setMode('chat')
-              }}
-            >
-              {collapsed ? <AiOutlinePlusCircle /> : '部屋作成'}
-            </button>
-          </div>
+        <h1 className='p-3 text-2xl font-bold justify-center items-center flex'>
+          {"Maaaashi's Chat"}
+        </h1>
+        <Menu menuItemStyles={menuItemStyles} className='flex-1'>
           {channels.map((channel, index) => (
             <div className='tooltip w-full' data-tip={channel.name} key={index}>
               <MenuItem
@@ -212,6 +204,17 @@ export const SideMenu = () => {
             </div>
           ))}
         </Menu>
+        <div className='p-2'>
+          <button
+            className='btn btn-info w-full'
+            onClick={() => {
+              setOpenModal(true)
+              setMode('chat')
+            }}
+          >
+            {collapsed ? <AiOutlinePlusCircle /> : '部屋作成'}
+          </button>
+        </div>
       </div>
     </Sidebar>
   )

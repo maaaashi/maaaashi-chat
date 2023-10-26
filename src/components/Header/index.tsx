@@ -82,9 +82,6 @@ export const Header = () => {
         >
           <GiHamburgerMenu />
         </button>
-        <h1 className='p-3 text-2xl font-bold justify-center items-center hidden md:flex'>
-          {"Maaaashi's Chat"}
-        </h1>
         <h2 className='font-bold'>{selectChannel?.name}</h2>
       </div>
       <div className='gap-2'>
