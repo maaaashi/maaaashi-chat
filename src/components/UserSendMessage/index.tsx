@@ -11,6 +11,7 @@ import { AiOutlineSend } from 'react-icons/ai'
 import { useRecoilValue } from 'recoil'
 import { v4 as uuidv4 } from 'uuid'
 import { GrAttachment } from 'react-icons/gr'
+import axios from 'axios'
 
 export const UserSendMessage = () => {
   const [sendMessage] = useSendMessageMutation()
@@ -71,21 +72,13 @@ export const UserSendMessage = () => {
 
       const { url } = JSON.parse(data.createUploadUrl)
 
-      console.log(url)
-
-      const hoge = await fetch(url, {
-        method: 'PUT',
-        body: fileRef.current.files[0],
+      const hoge = await axios.put(url, fileRef.current.files[0], {
         headers: {
           'Content-Type': fileRef.current.files[0].type,
         },
       })
 
       console.log(hoge)
-
-      const json = await hoge.json()
-
-      console.log(json)
     } catch (error) {
       alert('comming soon')
       console.error(error)
